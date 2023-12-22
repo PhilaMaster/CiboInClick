@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">CiboInClick</string>
+    <string name="infoChiamata">Attenzione: per prenotare, si prega di chiamare con qualche ora di anticipo usando l\'apposito tasto in basso.</string>
+    <string name="buttonRecensioni">Recensioni</string>
+    <string name="buttonChiama">Prenota</string>
+    <string name="chiamaTel">Chiama +39%1$d</string>
+    <string name="prezzo">%1$d€</string>
+</resources>
