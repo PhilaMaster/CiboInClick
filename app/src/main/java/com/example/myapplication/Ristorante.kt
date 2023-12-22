@@ -13,7 +13,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
 class Ristorante : AppCompatActivity() {
-    //@SuppressLint("SetTextI18n")
+    //@SuppressLint("SetTextI18n") sussone
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
