@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.net.Uri
 import android.os.Bundle
 import android.text.Html
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TableLayout
@@ -22,7 +23,7 @@ class Ristorante : AppCompatActivity() {
         val idRistorante = "1"//la ricevo da andrea
         val tipoRistorante = "panino"//ricevo da andrea
         var nomeRistorante: String? = null
-        var telefonoRistorante: Int? = null
+        var telefonoRistorante: String? = null
 
         //inizializzo database e prendo i valori del ristorante
         val dbHelper = MyDbHelper(this)
@@ -37,7 +38,7 @@ class Ristorante : AppCompatActivity() {
             nomeRistorante = cursor.getString(indexNome)
 
             val indexPrezzo = cursor.getColumnIndex("telefono")
-            telefonoRistorante = cursor.getInt(indexPrezzo)
+            telefonoRistorante = cursor.getString(indexPrezzo)
         }
         cursor.close()
 
@@ -119,7 +120,12 @@ VALUES
  */
 
 
-    private fun inizializzaTesto(nomeRistorante:String?,telefonoRistorante:Int?){
+    private fun inizializzaTesto(nomeRistorante:String?,telefonoRistorante:String?){
+        if ( (nomeRistorante==null) || (telefonoRistorante==null)){//controllo sulle query
+            Log.e("stringheNull","Errore stringhe null nomeRistorante o TelefonoRistorante. Query non funzionante")
+        }
+
+
         val sourceString = "Benvenuto da <b> $nomeRistorante</b>,<br> cosa vuoi ordinare?"
         //mytextview.setText(Html.fromHtml(sourceString));
         val tvNomeRistorante = findViewById<TextView>(R.id.nomeRistorante)
