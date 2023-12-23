@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class Ristorante : AppCompatActivity() {
@@ -96,10 +97,15 @@ class Ristorante : AppCompatActivity() {
 
         val buttonRecensioni = findViewById<Button>(R.id.buttonRecensioni)
         buttonRecensioni.setOnClickListener{
+            /*
             val intent = Intent(this,Ristorante::class.java)
             intent.putExtra("idRistorante",idRistorante)
             intent.putExtra("tipoRistorante",tipoRistorante)
             startActivity(intent)
+             */
+            //TODO codice di debug per resettare il database
+            dbHelper.deleteDatabase(this)
+            Toast.makeText(this,"Database eliminato",Toast.LENGTH_SHORT).show()
         }
     }
 

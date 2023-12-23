@@ -12,12 +12,21 @@ class MyDbHelper(context: Context): SQLiteOpenHelper(context, "mydatabase.db", n
         p0.execSQL("CREATE TABLE Recensione (ristorante INTEGER,nomeRecensore TEXT, votoPrezzo REAL, votoCibo REAL, PRIMARY KEY (ristorante,nomeRecensore), FOREIGN KEY (ristorante) REFERENCES Ristorante(id));")
 
         p0.execSQL("INSERT INTO Menu (ristorante,nome,tipo,prezzo) VALUES" +
-                "(1,\"Mi sballo\",\"panino\",12.50)," +
-                "(1,\"Mi 'ndujo'\",\"panino\",9.99)," +
+                "(1,\"Mi'Ndujo\",\"panino\",9.99)," +
+                "(1,\"Acri'\",\"panino\",7.99)," +
+                "(1,\"Bisignano\",\"panino\",9.99)," +
+                "(1,\"Luzzi'\",\"panino\",6.99)," +
+                "(1,\"Mi sballo\",\"panino\",11.99)," +
+                "(1,\"Bisignano top\",\"panino\",12.99)," +
+                "(1,\"Mi sbunnu\",\"panino\",13.99)," +
+                "(1,\"Conzativicci\",\"panino\",9.99)," +
+                "(1,\"Ton Pippo\",\"panino\",10.99)," +
+                "(1,\"Ghiotto\",\"panino\",6.99)," +
+                "(1,\"Vegetariano\",\"panino\",6.99)," +
                 "(2,\"Caruso\",\"pizza\",12.50);")
 
         p0.execSQL("INSERT INTO Ristorante (id,nome,telefono,longitudine,latitudine) VALUES " +
-                "(01,\"Mi 'ndujo\",\"3517591007\",39.35363861160489, 16.23595023170938);")
+                "(1,\"Mi 'ndujo\",\"3517591007\",39.35363861160489, 16.23595023170938);")
     }
     /*
 
@@ -29,5 +38,9 @@ class MyDbHelper(context: Context): SQLiteOpenHelper(context, "mydatabase.db", n
 
     override fun onUpgrade(p0: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         TODO("Not yet implemented")
+    }
+
+    fun deleteDatabase(context: Context){
+        context.getDatabasePath("mydatabase.db").delete()
     }
 }
