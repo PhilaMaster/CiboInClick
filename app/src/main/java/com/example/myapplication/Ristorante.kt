@@ -30,7 +30,7 @@ class Ristorante : AppCompatActivity() {
         val dbHelper = MyDbHelper(this)
         val db: SQLiteDatabase = dbHelper.writableDatabase //apro il db
         var columns = arrayOf("nome","telefono")
-        var where = "id = ?"
+        var where = "_id = ?"
         var whereArgs = arrayOf(idRistorante)//deve prendere i valori da
         var cursor = db.query("Ristorante",columns,where,whereArgs,null,null,null)
 
@@ -113,7 +113,7 @@ class Ristorante : AppCompatActivity() {
 
 /*
 PER INSERIRE IN RISTORANTE
-INSERT INTO Ristorante (id,nome,telefono,longitudine,latitudine)
+INSERT INTO Ristorante (_id,nome,telefono,longitudine,latitudine)
 VALUES
 (1,"Mammare",3495639913,39.34433996327592, 16.244342723497894)
 
