@@ -5,4 +5,17 @@
     <string name="buttonChiama">Prenota</string>
     <string name="chiamaTel">Chiama +39%1$s</string>
     <string name="prezzo">%1$.2f€</string>
+    <string name="Prezzo">PREZZO</string>
+    <string name="Prodotto">PRODOTTO</string>
+    <string name="Menù">MENU\'</string>
+    <string name="benvenuto">Benvenuto da %1$s, nell\'ultimo periodo hai ordinato qui %2$d volte. Cosa vuoi ordinare?</string>
+
+    <string name="lunedì">lunedì</string>
+    <string name="martedì">martedì</string>
+    <string name="mercoledì">mercoledì</string>
+    <string name="giovedì">giovedì</string>
+    <string name="venerdì">venerdì</string>
+    <string name="sabato">sabato</string>
+    <string name="domenica">domenica</string>
+
 </resources>

@@ -58,17 +58,15 @@
         android:id="@+id/constraint2Layout"
         android:layout_width="409dp"
         android:layout_height="151dp"
-        android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/nomeRistorante"
-            android:layout_width="367dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:text="NomeNegozio"
+            android:textAlignment="center"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -82,8 +80,9 @@
         android:layout_marginTop="46dp"
 
         android:layout_marginBottom="11dp"
-        android:text="MENU'"
+        android:text="@string/Menù"
         android:textSize="35sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/scrollView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -104,6 +103,7 @@
             android:layout_height="wrap_content">
 
             <TableRow
+                android:id="@+id/tablerow1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -112,19 +112,17 @@
                     android:layout_width="175dp"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
-                    android:textSize="30sp"
-                    tools:text="Prodotto" />
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/textView2"
                     android:layout_width="175dp"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
-                    android:textSize="30sp"
-                    tools:text="Prezzo" />
+                    android:textSize="30sp" />
             </TableRow>
 
-            <TableRow/>
+            <TableRow android:id="@+id/tablerow2" />
         </TableLayout>
 
 
