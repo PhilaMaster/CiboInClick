@@ -9,7 +9,7 @@
     <string name="Prodotto">PRODOTTO</string>
     <string name="Menù">MENU\'</string>
     <string name="benvenuto">Benvenuto da %1$s, nell\'ultimo periodo hai ordinato qui %2$d volte. Cosa vuoi ordinare?</string>
-
+    <string name = "my_map_api_key">AIzaSyAkbI1wDdws2ErfJT4dAuxht0pKX7MiVtk</string>
     <string name="lunedì">lunedì</string>
     <string name="martedì">martedì</string>
     <string name="mercoledì">mercoledì</string>
