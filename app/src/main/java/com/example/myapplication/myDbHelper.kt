@@ -1,6 +1,7 @@
 package com.example.myapplication
 
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
@@ -27,6 +28,14 @@ class MyDbHelper(context: Context): SQLiteOpenHelper(context, "mydatabase.db", n
 
         p0.execSQL("INSERT INTO Ristorante (_id,nome,telefono,numPrenotazioni, ultimoGiorno, longitudine,latitudine) VALUES " +
                 "(1,\"Mi 'ndujo\",\"3517591007\",5,\"martedì\",39.35363861160489, 16.23595023170938);")
+
+        p0.execSQL("INSERT INTO Recensione (ristorante,nomeRecensore,votoPrezzo,votoCibo) VALUES" +
+                "(1,\"Domenico\",3.0,4.5)," +
+                "(1,\"Pasquale\",3.5,4.0)," +
+                "(1,\"Andrea\",4.0,3.5)," +
+                "(1,\"Giuseppe\",4.5,4.5)," +
+                "(1,\"Il QG\",2.5,3.0);")
+
     }
     /*
 
@@ -42,5 +51,11 @@ class MyDbHelper(context: Context): SQLiteOpenHelper(context, "mydatabase.db", n
 
     fun deleteDatabase(context: Context){
         context.getDatabasePath("mydatabase.db").delete()
+    }
+
+    fun getRecensioniByRistoranteId(ristoranteId: String): Cursor {
+        val db = readableDatabase
+        val query = "SELECT nomeRecensore, votoPrezzo, votoCibo FROM Recensione WHERE ristorante = ?"
+        return db.rawQuery(query, arrayOf(ristoranteId))
     }
 }
