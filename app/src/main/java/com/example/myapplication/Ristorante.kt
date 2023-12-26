@@ -55,14 +55,10 @@ class Ristorante : AppCompatActivity() {
         val tableLayout= findViewById<TableLayout>(R.id.tableLayout)
 
         //query per riempire il menù del ristorante
-        columns = arrayOf("nome","prezzo")
-        if (tipoRistorante != "tutto"){
-            where = "ristorante = ? AND tipo = ?"
-            whereArgs = arrayOf(idRistorante, tipoRistorante)
-        }else {
-            where = "ristorante = ?"
-            whereArgs = arrayOf(idRistorante)
-        }
+        columns = arrayOf("nome","prezzo","tipo")
+        where = "ristorante = ?"
+        whereArgs = arrayOf(idRistorante)
+
         cursor = db.query("Menu",columns,where,whereArgs,null,null,null)
 
 
@@ -73,6 +69,9 @@ class Ristorante : AppCompatActivity() {
 
                 val indexPrezzo = cursor.getColumnIndex("prezzo")
                 val prezzo = cursor.getDouble(indexPrezzo)
+
+                val indexTipoprodotto = cursor.getColumnIndex("tipo")
+                val tipoprodotto = cursor.getString(indexTipoprodotto)
 
                 val tRow = TableRow(this)
                 var tView = TextView(this)
@@ -87,6 +86,20 @@ class Ristorante : AppCompatActivity() {
                 tView = TextView(this)
 
                 tView.text = getString(R.string.prezzo, prezzo)
+                tView.textSize = 20f
+                tView.textAlignment = View.TEXT_ALIGNMENT_CENTER
+                tRow.addView(tView)
+
+                //testo3: tipoProdotto
+                tView = TextView(this)
+
+                var tipo:String = "N"
+                when(tipoprodotto){
+                    "panino" -> tipo = "PA"
+                    "pizza" -> tipo = "PI"
+                    "sushi" -> tipo = "SU"
+                }
+                tView.text = tipo
                 tView.textSize = 20f
                 tView.textAlignment = View.TEXT_ALIGNMENT_CENTER
                 tRow.addView(tView)

@@ -109,7 +109,7 @@
 
                 <TextView
                     android:id="@+id/textView1"
-                    android:layout_width="175dp"
+                    android:layout_width="165dp"
                     android:layout_height="wrap_content"
                     android:text="@string/Prodotto"
                     android:textAlignment="center"
@@ -117,9 +117,17 @@
 
                 <TextView
                     android:id="@+id/textView2"
-                    android:layout_width="175dp"
+                    android:layout_width="165dp"
                     android:layout_height="wrap_content"
                     android:text="@string/Prezzo"
+                    android:textAlignment="center"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="N"
                     android:textAlignment="center"
                     android:textSize="30sp" />
             </TableRow>
