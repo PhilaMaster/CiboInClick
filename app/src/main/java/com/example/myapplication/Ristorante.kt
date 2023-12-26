@@ -23,8 +23,8 @@ class Ristorante : AppCompatActivity() {
         setContentView(R.layout.activity_ristorante)
 
         //ricevo i valori dalle activity precedenti tramite intents
-        val idRistorante = "1"//la ricevo da andrea
-        val tipoRistorante = "panino"//ricevo da andrea
+        val idRistorante = intent.getStringExtra("ChiaveId")//la ricevo da andrea
+        val tipoRistorante = intent.getStringExtra("ChiaveTipo")//ricevo da andrea
         var telefonoRistorante: String? = null
 
         //inizializzo database e prendo i valori del ristorante
@@ -132,7 +132,7 @@ class Ristorante : AppCompatActivity() {
         }
     }
 
-    internal fun aggiungiPrenotazione(idRistorante: String, giornoString: String, db:SQLiteDatabase) {
+    internal fun aggiungiPrenotazione(idRistorante: String?, giornoString: String, db:SQLiteDatabase) {
         numPrenotazioni++
         val stringhe = arrayOf(numPrenotazioni, giornoString, idRistorante)
         db.execSQL("UPDATE Ristorante SET numPrenotazioni=?, ultimoGiorno = ? WHERE _id=?", stringhe)
