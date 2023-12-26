@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/material_dynamic_tertiary95"
+
     tools:context=".MainActivity">
 
 
@@ -16,7 +16,6 @@
         android:layout_height="121dp"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="150dp"
-        android:background="@color/material_dynamic_tertiary95"
         android:scaleType="fitCenter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -29,7 +28,6 @@
         android:layout_height="118dp"
         android:layout_marginTop="150dp"
         android:layout_marginRight="50dp"
-        android:background="@color/material_dynamic_tertiary95"
         android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -67,7 +65,6 @@
         android:layout_height="147dp"
         android:layout_marginStart="60dp"
         android:layout_marginTop="268dp"
-        android:background="@color/material_dynamic_tertiary95"
         android:scaleType="fitCenter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
