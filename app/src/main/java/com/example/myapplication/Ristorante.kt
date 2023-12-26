@@ -20,7 +20,7 @@ class Ristorante : AppCompatActivity() {
     private var nomeRistorante:String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_ristorante)
 
         //ricevo i valori dalle activity precedenti tramite intents
         val idRistorante = "1"//la ricevo da andrea
@@ -141,11 +141,6 @@ class Ristorante : AppCompatActivity() {
         tvNomeRistorante.text = getString(R.string.benvenuto,nomeRistorante,numPrenotazioni)
         val buttonTelefono = findViewById<Button>(R.id.buttonTelefono)
         buttonTelefono.text = getString(R.string.chiamaTel, telefonoRistorante)//"Chiama +39$telefonoRistorante"
-
-        val textView1 = findViewById<TextView>(R.id.textView1)
-        textView1.text = getString(R.string.Prodotto)
-        val textView2 = findViewById<TextView>(R.id.textView2)
-        textView2.text = getString(R.string.Prezzo)
     }
 
     //per avere il giorno della settimana attuale -> LocalDate.now().dayOfWeek
