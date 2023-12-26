@@ -121,15 +121,14 @@ class Ristorante : AppCompatActivity() {
 
         val buttonRecensioni = findViewById<Button>(R.id.buttonRecensioni)
         buttonRecensioni.setOnClickListener{
-            /*
-            val intent = Intent(this,Ristorante::class.java)
+
+            val intent = Intent(this,Recensione::class.java)
             intent.putExtra("idRistorante",idRistorante)
-            intent.putExtra("tipoRistorante",tipoRistorante)
             startActivity(intent)
-             */
-            //TODO codice di debug per resettare il database
-            dbHelper.deleteDatabase(this)
-            Toast.makeText(this,"Database eliminato",Toast.LENGTH_SHORT).show()
+
+            //codice di debug per resettare il database
+            //dbHelper.deleteDatabase(this)
+            //Toast.makeText(this,"Database eliminato",Toast.LENGTH_SHORT).show()
         }
     }
 
