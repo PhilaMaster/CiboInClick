@@ -3,6 +3,7 @@ package com.example.myapplication
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
@@ -22,6 +23,8 @@ import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import android.location.*
+import android.widget.Button
+import android.widget.ImageButton
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.myapplication.MyDbHelper
@@ -40,6 +43,7 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback{
     private val dbHelper = MyDbHelper(this)
     private lateinit var myMap: GoogleMap
 
+
     override fun onCreate(savedInstanceState: Bundle?)
         {
             super.onCreate(savedInstanceState)
@@ -56,7 +60,7 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback{
         val datoRicevuto = intent.getStringExtra("Chiave")  //qui dentro ho pizza, panino, sushi o tutto
 
         val selectionArgs = arrayOf(datoRicevuto) //estraggo in base al tipo che mi arriva dal put extra
-        val cursor = db.rawQuery("SELECT r.nome,m.tipo " +
+        val cursor = db.rawQuery("SELECT DISTINCT r.nome,m.tipo,r._id " +
                 "                       FROM Ristorante r, Menu m " +
                 "                       WHERE r._id=m.ristorante AND" +
                 "                             tipo = ?",selectionArgs)
@@ -72,6 +76,8 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback{
             val nome = cursor.getString(indexNome)
 
             //  Toast.makeText(this,nome,Toast.LENGTH_SHORT).show()
+            val indexId = cursor.getColumnIndex("_id")
+            val id = cursor.getString(indexId)
 
             val indexTipo = cursor.getColumnIndex("tipo")
             val tipo = cursor.getString(indexTipo)
@@ -79,14 +85,16 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback{
             Toast.makeText(this, "Nome: $nome, Tipo: $tipo", Toast.LENGTH_SHORT).show()
 
             // Crea celle TextView e aggiungile alla riga
-            val textViewNome = TextView(this)
-            textViewNome.text = nome
+            val button = Button(this)
+            button.text = "$nome , $tipo"
+            button.setOnClickListener {
+                val intent = Intent(this, Ristorante::class.java)
+                intent.putExtra("ChiaveId", id)
+                intent.putExtra("ChiaveTipo", tipo)
+                startActivity(intent)
+            }
+            tableRow.addView(button)
 
-            val textViewTipo = TextView(this)
-            textViewTipo.text = tipo
-
-            tableRow.addView(textViewNome)
-            tableRow.addView(textViewTipo)
 
             // Aggiungi la riga al TableLayout
             tableLayout.addView(tableRow)
@@ -96,13 +104,37 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback{
 
     override fun onMapReady(p0: GoogleMap) {
         myMap = p0
-        Log.d("MapDebug", "onMapReady called")
+        var db: SQLiteDatabase = dbHelper.writableDatabase //apro il db
+        val datoRicevuto = intent.getStringExtra("Chiave")  //qui dentro ho pizza, panino, sushi o tutto*
+        val selectionArgs = arrayOf(datoRicevuto) //estraggo in base al tipo che mi arriva dal put extra
+        val cursor = db.rawQuery("SELECT DISTINCT r.longitudine,r.latitudine,r.nome " +
+                "                       FROM Ristorante r, Menu m " +
+                "                       WHERE r._id=m.ristorante AND" +
+                "                             tipo = ?",selectionArgs)
 
+        while(cursor.moveToNext()){
+            val indexNome = cursor.getColumnIndex("nome")
+            val nome = cursor.getString(indexNome)
+
+            val indexLat = cursor.getColumnIndex("latitudine")
+            val latitudine = cursor.getDouble(indexLat)
+
+            val indexLong = cursor.getColumnIndex("longitudine")
+            val longitudine = cursor.getDouble(indexLong)
+
+            myMap.setOnMapLoadedCallback {
+                val pos = LatLng(latitudine,longitudine)
+                myMap.addMarker(MarkerOptions().position(pos).title(nome))
+                myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 10.0f))
+            }
+
+        }
+/*
         myMap.setOnMapLoadedCallback {
             val sydney = LatLng(-34.0, 151.0)
             myMap.addMarker(MarkerOptions().position(sydney).title("Sydney"))
             myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 10.0f))
-        }
+        }*/
     }
 
 
