@@ -6,12 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
-import android.widget.ListView
 import android.widget.TextView
-import android.widget.Toast
-import com.example.myapplication.MyDbHelper
-import com.example.myapplication.R
-import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.util.*
 

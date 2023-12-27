@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">CiboInClick</string>
     <string name="infoChiamata">Attenzione: per prenotare, si prega di chiamare con qualche ora di anticipo usando l\'apposito tasto in basso.</string>
-    <string name="buttonRecensioni">Reset DB</string><!-- TODO dovrebbe chiamarsi Recensioni ma lo uso come debug attualmente -->
+    <string name="buttonRecensioni">Recensioni</string>
     <string name="buttonChiama">Prenota</string>
     <string name="chiamaTel">Chiama +39%1$s</string>
     <string name="prezzo">%1$.2f€</string>
@@ -9,7 +9,7 @@
     <string name="Prodotto">PRODOTTO</string>
     <string name="Menù">MENU\'</string>
     <string name="benvenuto">Benvenuto da %1$s, nell\'ultimo periodo hai ordinato qui %2$d volte. Cosa vuoi ordinare?</string>
-    <string name = "my_map_api_key">AIzaSyAkbI1wDdws2ErfJT4dAuxht0pKX7MiVtk</string>
+
     <string name="lunedì">lunedì</string>
     <string name="martedì">martedì</string>
     <string name="mercoledì">mercoledì</string>
@@ -18,4 +18,5 @@
     <string name="sabato">sabato</string>
     <string name="domenica">domenica</string>
 
+    <string name = "my_map_api_key">AIzaSyAkbI1wDdws2ErfJT4dAuxht0pKX7MiVtk</string>
 </resources>
