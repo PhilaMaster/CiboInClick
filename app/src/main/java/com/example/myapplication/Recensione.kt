@@ -191,7 +191,11 @@ class Recensione : AppCompatActivity() {
 
                 // Inserisci i dati nella tabella "Recensione"
                 val result = db.insert("Recensione", null, values)
-
+                Toast.makeText(
+                    this@Recensione,
+                    "Recensione inviata con successo!",
+                    Toast.LENGTH_SHORT
+                ).show()
                 // Controlla se l'inserimento è avvenuto con successo
 
             } else {
