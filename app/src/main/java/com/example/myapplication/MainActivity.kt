@@ -78,8 +78,9 @@ class MainActivity : AppCompatActivity() {
 
 
         val cursor = db.rawQuery(
-            "SELECT r.nome " +
-                    "FROM Ristorante r " +
+            "SELECT r.nome, r._id,m.tipo " +
+                    "FROM Ristorante r ,Menu m " +
+                    "WHERE r._id=m.ristorante " +
                     "ORDER BY r.numPrenotazioni DESC;", null
         )
 
@@ -87,10 +88,22 @@ class MainActivity : AppCompatActivity() {
             val IndexRist = cursor.getColumnIndex("nome")
             val nome = cursor.getString(IndexRist)
 
+            val IndexId = cursor.getColumnIndex("_id")
+            val id = cursor.getString(IndexId)
+
+            val IndexTipo = cursor.getColumnIndex("tipo")
+            val tipo = cursor.getString(IndexTipo)
+
             button1.visibility = View.VISIBLE
             text1.visibility = View.VISIBLE
             button1.text = "Prenota $nome"
             text1.text = "L'ultima volta hai prenotato da $nome"
+            button1.setOnClickListener {
+                val intent = Intent(this, Ristorante::class.java)
+                intent.putExtra("ChiaveId", id)
+                intent.putExtra("ChiaveTipo", tipo)
+                startActivity(intent)
+            }
         }
     }
 
