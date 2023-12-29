@@ -53,7 +53,7 @@
             android:layout_marginRight="300dp"
             android:layout_marginTop="18dp"
             android:gravity="left"
-            android:text="CIBO:"
+            android:text="@string/cibo_r"
             android:textSize="24dp" />
 
         <RatingBar
@@ -90,7 +90,7 @@
             android:layout_marginRight="250dp"
             android:layout_marginTop="18dp"
             android:gravity="left"
-            android:text="PREZZO:"
+            android:text="@string/prezzo_r"
             android:textSize="24dp" />
 
         <RatingBar
@@ -167,7 +167,7 @@
             android:gravity="center"
             android:layout_centerHorizontal="true"
             android:inputType="text"
-            android:text="Inserisci qui il tuo nome"
+            android:text="@string/inserimento_nome_r"
             android:textSize="20dp"/>
 
         <TextView
@@ -175,7 +175,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="85dp"
-            android:text="Vota il cibo:"
+            android:text="@string/vota_cibo"
             android:textSize="20dp" />
 
         <TextView
@@ -183,7 +183,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="140dp"
-            android:text="Vota il prezzo:"
+            android:text="@string/vota_prezzo"
             android:textSize="20dp"/>
 
         <Button
@@ -192,7 +192,7 @@
             android:layout_height="60dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="190dp"
-            android:text="Conferma!"
+            android:text="@string/conferma_recensione"
             android:textSize="20dp" />
 
         <RatingBar

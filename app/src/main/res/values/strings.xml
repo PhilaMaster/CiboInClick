@@ -18,5 +18,12 @@
     <string name="sabato">sabato</string>
     <string name="domenica">domenica</string>
 
+    <string name="cibo_r">CIBO:</string>
+    <string name="prezzo_r">PREZZO:</string>
+    <string name="inserimento_nome_r">Inserisci qui il tuo nome</string>
+    <string name="vota_cibo">Vota il cibo:</string>
+    <string name="vota_prezzo">Vota il prezzo:</string>
+    <string name="conferma_recensione">Conferma!</string>
+
     <string name = "my_map_api_key">AIzaSyAkbI1wDdws2ErfJT4dAuxht0pKX7MiVtk</string>
 </resources>
