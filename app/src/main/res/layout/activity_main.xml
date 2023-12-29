@@ -41,7 +41,7 @@
                 android:layout_height="140dp"
                 android:layout_gravity="center"
                 android:scaleType="fitCenter"
-                app:srcCompat="@drawable/pan"
+                app:srcCompat="@drawable/hamburger_top"
                 tools:ignore="SpeakableTextPresentCheck" />
         </LinearLayout>
 
@@ -57,7 +57,7 @@
                 android:layout_height="140dp"
                 android:layout_gravity="center"
                 android:scaleType="fitCenter"
-                app:srcCompat="@drawable/sussh"
+                app:srcCompat="@drawable/sushi"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <ImageButton
@@ -67,7 +67,7 @@
                 android:layout_height="140dp"
                 android:layout_gravity="center"
                 android:scaleType="fitCenter"
-                app:srcCompat="@drawable/sussh"
+                app:srcCompat="@drawable/all_foods"
                 tools:ignore="SpeakableTextPresentCheck" />
         </LinearLayout>
     </LinearLayout>
@@ -174,6 +174,7 @@
             android:layout_height="69dp"
             android:width="60dp"
             android:height="70dp"
+            android:backgroundTint="#D1C4E9"
             android:text="Button"
             android:textColor="@color/black"
             app:layout_constraintBottom_toTopOf="@+id/textUltimoGiorno"
@@ -187,6 +188,7 @@
             android:layout_height="69dp"
             android:width="60dp"
             android:height="70dp"
+            android:backgroundTint="#D1C4E9"
             android:text="Button"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"

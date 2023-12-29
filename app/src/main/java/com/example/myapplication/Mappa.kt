@@ -23,8 +23,10 @@ import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import android.location.*
+import android.view.Gravity
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.LinearLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.myapplication.MyDbHelper
@@ -87,13 +89,16 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback{
             // Crea celle TextView e aggiungile alla riga
             val button = Button(this)
             button.text = "$nome , $tipo"
+
             button.setOnClickListener {
                 val intent = Intent(this, Ristorante::class.java)
                 intent.putExtra("ChiaveId", id)
                 intent.putExtra("ChiaveTipo", tipo)
                 startActivity(intent)
             }
+
             tableRow.addView(button)
+
 
 
             // Aggiungi la riga al TableLayout
@@ -104,15 +109,17 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback{
 
     override fun onMapReady(p0: GoogleMap) {
         myMap = p0
-        var db: SQLiteDatabase = dbHelper.writableDatabase //apro il db
-        val datoRicevuto = intent.getStringExtra("Chiave")  //qui dentro ho pizza, panino, sushi o tutto*
-        val selectionArgs = arrayOf(datoRicevuto) //estraggo in base al tipo che mi arriva dal put extra
+        var db: SQLiteDatabase = dbHelper.writableDatabase // apro il db
+        val datoRicevuto = intent.getStringExtra("Chiave")  // qui dentro ho pizza, panino, sushi o tutto*
+        val selectionArgs = arrayOf(datoRicevuto) // estraggo in base al tipo che mi arriva dal put extra
         val cursor = db.rawQuery("SELECT DISTINCT r.longitudine,r.latitudine,r.nome " +
-                "                       FROM Ristorante r, Menu m " +
-                "                       WHERE r._id=m.ristorante AND" +
-                "                             tipo = ?",selectionArgs)
+                "FROM Ristorante r, Menu m " +
+                "WHERE r._id=m.ristorante AND" +
+                " tipo = ?", selectionArgs)
 
-        while(cursor.moveToNext()){
+        var firstLocation: LatLng? = null
+
+        while (cursor.moveToNext()) {
             val indexNome = cursor.getColumnIndex("nome")
             val nome = cursor.getString(indexNome)
 
@@ -122,20 +129,22 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback{
             val indexLong = cursor.getColumnIndex("longitudine")
             val longitudine = cursor.getDouble(indexLong)
 
-            myMap.setOnMapLoadedCallback {
-                val pos = LatLng(latitudine,longitudine)
-                myMap.addMarker(MarkerOptions().position(pos).title(nome))
-                myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 10.0f))
-            }
+            val pos = LatLng(longitudine,latitudine)
+            myMap.addMarker(MarkerOptions().position(pos).title(nome))
 
+            if (firstLocation == null) {
+                firstLocation = pos
+            }
         }
-/*
-        myMap.setOnMapLoadedCallback {
-            val sydney = LatLng(-34.0, 151.0)
-            myMap.addMarker(MarkerOptions().position(sydney).title("Sydney"))
-            myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 10.0f))
-        }*/
+
+        // Imposta la camera solo se ci sono risultati
+        firstLocation?.let {
+            myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(it, 10.0f))
+        }
+
+        cursor.close() // Chiudere il cursore quando non è più necessario
     }
+
 
 
 

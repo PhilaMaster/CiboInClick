@@ -36,6 +36,13 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("Chiave", "sushi")
             startActivity(intent)
         }
+        val mappa4 = findViewById<ImageButton>(R.id.imageButton4)
+        mappa3.setOnClickListener {
+            val intent = Intent(this, Mappa::class.java)
+            intent.putExtra("Chiave", "sushi")
+            startActivity(intent)
+        }
+
 
         this.gestioneOrario()
         this.gestioneVisibilitàBottoneUlt()
@@ -133,19 +140,30 @@ class MainActivity : AppCompatActivity() {
             val giornoAttuale = giornoCorrente()
             val selectionArgs = arrayOf(giornoAttuale)
                val cursor = db.rawQuery(
-                "SELECT r.nome " +
-                        "FROM Ristorante r " +
-                        "WHERE r.ultimoGiorno = ?;", selectionArgs)
+                "SELECT r.nome, r._id, m.tipo " +
+                        "FROM Ristorante r, Menu m " +
+                        "WHERE r._id = m.ristorante AND r.ultimoGiorno = ?;", selectionArgs)
 
                 if (cursor.moveToNext()) {
                     val IndexRist = cursor.getColumnIndex("nome")
                     val nome = cursor.getString(IndexRist)
+
+                    val IndexId = cursor.getColumnIndex("_id")
+                    val id = cursor.getString(IndexId)
+                    val IndexTipo = cursor.getColumnIndex("tipo")
+                    val tipo = cursor.getString(IndexTipo)
 
                     button2.visibility = View.VISIBLE
                     text2.visibility = View.VISIBLE
                     button2.text = "Prenota $nome"
                     text2.text = "$giornoAttuale scorso sei stato da $nome. Vuoi riandarci?"
 
+                    button2.setOnClickListener {
+                        val intent = Intent(this, Ristorante::class.java)
+                        intent.putExtra("ChiaveId", id)
+                        intent.putExtra("ChiaveTipo", tipo)
+                        startActivity(intent)
+                    }
                 }
 
         }
