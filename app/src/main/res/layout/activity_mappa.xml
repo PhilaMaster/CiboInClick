@@ -20,14 +20,14 @@
 
     <TableLayout
         android:id="@+id/tables"
-        android:layout_width="367dp"
-        android:layout_height="330dp"
+        android:layout_width="377dp"
+        android:layout_height="284dp"
         android:layout_marginStart="20dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <TableRow
             android:id="@+id/tableRow"

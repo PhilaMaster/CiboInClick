@@ -23,8 +23,8 @@ class MyDbHelper(context: Context): SQLiteOpenHelper(context, "mydatabase.db", n
                 "(1,\"Conzativicci\",\"panino\",9.99)," +
                 "(1,\"Ton Pippo\",\"panino\",10.99)," +
                 "(1,\"Ghiotto\",\"panino\",6.99)," +
-                "(1,\"Vegetariano\",\"panino\",6.99)," +
-                "(3,\"Caruso\",\"pizza\",12.50);")
+                "(1,\"Vegetariano\",\"panino\",6.99);")
+                //"(3,\"Caruso\",\"pizza\",12.50);")
 
         p0.execSQL("INSERT INTO Menu (ristorante,nome,tipo,prezzo) VALUES" +
                 "(2,\"Doppio Hamburger\",\"panino\",9.99)," +

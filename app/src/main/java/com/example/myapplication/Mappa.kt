@@ -31,19 +31,25 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.myapplication.MyDbHelper
 import com.example.myapplication.R
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import org.osmdroid.config.Configuration
 import org.w3c.dom.Text
+import java.io.IOException
+import java.util.Locale
 
 
 class Mappa: AppCompatActivity(), OnMapReadyCallback{
 
     private val dbHelper = MyDbHelper(this)
     private lateinit var myMap: GoogleMap
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
 
     override fun onCreate(savedInstanceState: Bundle?)
@@ -53,7 +59,22 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback{
             var mapFragment: SupportMapFragment? = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
             mapFragment?.getMapAsync(this)
             this.gestioneEstrazioneDati()
+            fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
+            // Verifica e richiedi i permessi di localizzazione
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                requestLocation()
+            } else {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+                    MY_PERMISSIONS_REQUEST_LOCATION
+                )
+            }
             }
 
 
@@ -107,9 +128,59 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback{
         cursor.close()  // Chiudi il Cursor dopo aver estratto i dati
     }
 
+    private fun requestLocation() {
+        // Ottieni la posizione attuale
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return
+        }
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener { location: Location? ->
+                if (location != null) {
+                    val currentLatLng = LatLng(location.latitude, location.longitude)
+                    myMap.addMarker(MarkerOptions().position(currentLatLng).title("La mia posizione"))
+                    myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f))
+                    val cityName = getCityName(location)
+                    val message = "Sei a $cityName"
+                    val cityTextView: TextView = findViewById(R.id.textbox1)
+                    cityTextView.text = message
+                }
+            }
+    }
+    private fun getCityName(location: Location): String {
+        val geocoder = Geocoder(this, Locale.getDefault())
+        try {
+            val addresses: MutableList<Address>? = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+            if (addresses != null) {
+                if (addresses.isNotEmpty()) {
+                    val city = addresses?.get(0)?.locality
+                    if (city != null && city.isNotEmpty()) {
+                        return city
+                    }
+                }
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return "Città sconosciuta"
+    }
     override fun onMapReady(p0: GoogleMap) {
         myMap = p0
         var db: SQLiteDatabase = dbHelper.writableDatabase // apro il db
+
         val datoRicevuto = intent.getStringExtra("Chiave")  // qui dentro ho pizza, panino, sushi o tutto*
         val selectionArgs = arrayOf(datoRicevuto) // estraggo in base al tipo che mi arriva dal put extra
         val cursor = db.rawQuery("SELECT DISTINCT r.longitudine,r.latitudine,r.nome " +
@@ -135,6 +206,7 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback{
             if (firstLocation == null) {
                 firstLocation = pos
             }
+
         }
 
         // Imposta la camera solo se ci sono risultati
@@ -143,10 +215,13 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback{
         }
 
         cursor.close() // Chiudere il cursore quando non è più necessario
+
+
     }
 
-
-
-
-
+    companion object {
+        private const val MY_PERMISSIONS_REQUEST_LOCATION = 99
+    }
 }
+
+
