@@ -22,6 +22,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
+        android:configChanges="locale|orientation"
         tools:targetApi="31">
 
         <meta-data

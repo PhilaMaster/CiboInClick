@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name">CiboInClick</string>
+    <string name="app_name" translatable="false">CiboInClick</string>
     <string name="infoChiamata">Attenzione: per prenotare, si prega di chiamare con qualche ora di anticipo usando l\'apposito tasto in basso.</string>
     <string name="buttonRecensioni">Recensioni</string>
     <string name="buttonChiama">Prenota</string>
     <string name="chiamaTel">Chiama +39%1$s</string>
     <string name="prezzo">%1$.2f€</string>
-    <string name="Prezzo">PREZZO</string>
-    <string name="Prodotto">PRODOTTO</string>
+    <string name="Prezzo">  PREZZO  </string>
+    <string name="Prodotto">  PRODOTTO  </string>
     <string name="Menù">MENU\'</string>
     <string name="benvenuto">Benvenuto da %1$s, nell\'ultimo periodo hai ordinato qui %2$d volte. Cosa vuoi ordinare?</string>
 
@@ -18,12 +18,29 @@
     <string name="sabato">sabato</string>
     <string name="domenica">domenica</string>
 
+    <!-- ActivityRistorante-->
     <string name="cibo_r">CIBO:</string>
     <string name="prezzo_r">PREZZO:</string>
-    <string name="inserimento_nome_r">Inserisci qui il tuo nome</string>
+    <string name="inserimento_nome_r">Inserisci il tuo nome</string>
     <string name="vota_cibo">Vota il cibo:</string>
     <string name="vota_prezzo">Vota il prezzo:</string>
     <string name="conferma_recensione">Conferma!</string>
+
+    <!-- MainActivity-->
+    <string name="cambiaLingua">Cambia lingua</string>
+    <string name="mangiareGiorno">Buongiorno, si avvicina l\'ora di pranzo. Cosa vuoi mangiare?</string>
+    <string name="mangiarePomeriggio">Buon pomeriggio, cosa vuoi mangiare?</string>
+    <string name="mangiareSera">Buonasera, si avvicina l\'ora di cena. Cosa vuoi mangiare?</string>
+    <string name="mangiareNotte">Buonasera, è molto tardi, spuntino notturno?</string>
+    <string name="sito" translatable="false">www.ciboinclick.it</string>
+    <string name="ultimaPButton" translatable="false">ultimaP</string>
+    <string name="ultimoGButton" translatable="false">ultimoG</string>
+    <string name="ultimaPText">L\'ultima volta hai prenotato da %1$s, vuoi andarci?</string>
+    <string name="ultimoGText">%1$s scorso hai mangiato da %2$s, vuoi prenotare?</string>
+
+
+    <!-- Mappa -->
+    <string name="seiA">You are in %1$s</string>
 
     <string name = "my_map_api_key">AIzaSyAkbI1wDdws2ErfJT4dAuxht0pKX7MiVtk</string>
 </resources>

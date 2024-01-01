@@ -154,7 +154,7 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback{
                     myMap.addMarker(MarkerOptions().position(currentLatLng).title("La mia posizione"))
                     myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f))
                     val cityName = getCityName(location)
-                    val message = "Sei a $cityName"
+                    val message = getString(R.string.seiA,cityName)
                     val cityTextView: TextView = findViewById(R.id.textbox1)
                     cityTextView.text = message
                 }

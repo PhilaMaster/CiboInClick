@@ -1,14 +1,18 @@
 package com.example.myapplication
+
+import android.app.Activity
 import android.content.Intent
+import android.content.res.Configuration
 import android.database.sqlite.SQLiteDatabase
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class MainActivity : AppCompatActivity() {
     private val mioDb = MyDbHelper(this)
@@ -43,6 +47,12 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        val cambiaLingua = findViewById<Button>(R.id.cambiaLingua)
+        cambiaLingua.setOnClickListener{
+            setLocale(this,"en")
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
 
         this.gestioneOrario()
         this.gestioneVisibilitàBottoneUlt()
@@ -50,7 +60,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun gestioneOrario() {
+    private fun gestioneOrario() {
         val textView2: TextView = findViewById(R.id.textView2)
 
         val currentTime = Calendar.getInstance().time
@@ -59,17 +69,18 @@ class MainActivity : AppCompatActivity() {
 
         // Aggiorno il text view in base all'orario
         when {
-            currentHour in 0..13 -> {
-                textView2.text = "Buongiorno, si avvicina l'ora di pranzo. Cosa vuoi mangiare?"
+            currentHour in 5..13 -> {
+                textView2.text = getString(R.string.mangiareGiorno)
             }
 
             currentHour in 14..17 -> {
-                textView2.text = "Buon pomeriggio, cosa vuoi mangiare?"
+                textView2.text = getString(R.string.mangiarePomeriggio)
             }
 
-            else -> {
-                textView2.text = "Buonasera, si avvicina l'ora di cena. Cosa vuoi mangiare?"
+            currentHour in 18..22  -> {
+                textView2.text = getString(R.string.mangiareSera)
             }
+            else -> textView2.text = getString(R.string.mangiareNotte)
         }
     }
 
@@ -104,7 +115,7 @@ class MainActivity : AppCompatActivity() {
             button1.visibility = View.VISIBLE
             text1.visibility = View.VISIBLE
             button1.text = "Prenota $nome"
-            text1.text = "L'ultima volta hai prenotato da $nome"
+            text1.text = getString(R.string.ultimaPText,nome)
             button1.setOnClickListener {
                 val intent = Intent(this, Ristorante::class.java)
                 intent.putExtra("ChiaveId", id)
@@ -130,7 +141,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        fun gestionePrenotazioneStessoGiorno(){
+        private fun gestionePrenotazioneStessoGiorno(){
             var db: SQLiteDatabase = mioDb.writableDatabase
             val button2: Button = findViewById(R.id.bottoneUltimoGiorno)
             val text2: TextView = findViewById(R.id.textUltimoGiorno)
@@ -156,7 +167,7 @@ class MainActivity : AppCompatActivity() {
                     button2.visibility = View.VISIBLE
                     text2.visibility = View.VISIBLE
                     button2.text = "Prenota $nome"
-                    text2.text = "$giornoAttuale scorso sei stato da $nome. Vuoi riandarci?"
+                    text2.text = getString(R.string.ultimoGText,giornoAttuale,nome)
 
                     button2.setOnClickListener {
                         val intent = Intent(this, Ristorante::class.java)
@@ -168,7 +179,14 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-
+    fun setLocale(activity: Activity, languageCode: String?) {
+        val locale = Locale(languageCode)
+        Locale.setDefault(locale)
+        val resources = activity.resources
+        val config: Configuration = resources.configuration
+        config.setLocale(locale)
+        resources.updateConfiguration(config, resources.displayMetrics)
+    }
 
     }
 

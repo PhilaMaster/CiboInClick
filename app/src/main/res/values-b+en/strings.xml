@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="infoChiamata">Attenzione: per prenotare, si prega di chiamare con qualche ora di anticipo usando l\'apposito tasto in basso.</string>
+    <string name="buttonRecensioni">Reviews</string>
+    <string name="buttonChiama">Book</string>
+    <string name="chiamaTel">Call +39%1$s</string>
+    <string name="prezzo">%1$.2f$</string>
+    <string name="Prezzo">PRICE</string>
+    <string name="Prodotto">PRODUCT</string>
+    <string name="Menù">MENU\'</string>
+    <string name="benvenuto">Welcome to %1$s, recently you ordered %2$d times. What would you like to order?</string>
+
+    <string name="lunedì">monday</string>
+    <string name="martedì">tuesday</string>
+    <string name="mercoledì">wednesday</string>
+    <string name="giovedì">thursday</string>
+    <string name="venerdì">friday</string>
+    <string name="sabato">saturday</string>
+    <string name="domenica">sunday</string>
+
+    <string name="cibo_r">FOOD:</string>
+    <string name="prezzo_r">PRICE:</string>
+    <string name="inserimento_nome_r">Enter your name</string>
+    <string name="vota_cibo">Food rating:</string>
+    <string name="vota_prezzo">Price rating:</string>
+    <string name="conferma_recensione">Submit!</string>
+
+
+    <!-- MainActivity-->
+    <string name="cambiaLingua">Change language</string>
+    <string name="mangiareGiorno">Goodmorning, lunch time is near. What would you like to eat?</string>
+    <string name="mangiarePomeriggio">Good afternoon, What would you like to eat?</string>
+    <string name="mangiareSera">Good evening, dinner time is near. What would you like to eat?</string>
+    <string name="mangiareNotte">Good evening, it\'s very late, night snack?</string>
+    <string name="ultimaPText">Last time you ordered from %1$s, do you want to go again?</string>
+    <string name="ultimoGText">Last %1$s you ate at %2$s, do you want to book?</string>
+
+    <string name = "my_map_api_key">AIzaSyAkbI1wDdws2ErfJT4dAuxht0pKX7MiVtk</string>
+</resources>

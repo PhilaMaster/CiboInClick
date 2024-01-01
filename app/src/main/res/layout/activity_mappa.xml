@@ -12,7 +12,6 @@
         android:layout_width="313dp"
         android:layout_height="62dp"
         android:layout_marginTop="24dp"
-        android:text="Qui puoi ordinare"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
