@@ -2,11 +2,17 @@ package com.example.myapplication
 
 import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.ScrollView
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
@@ -51,6 +57,8 @@ class Ristorante : AppCompatActivity() {
         //inizializzo stringhe
         inizializzaTesto(nomeRistorante,telefonoRistorante)
 
+        //inizializzo dimensione tabella
+        //inizializzaDimTabella()
 
         val tableLayout= findViewById<TableLayout>(R.id.tableLayout)
 
@@ -90,19 +98,31 @@ class Ristorante : AppCompatActivity() {
                 tView.textAlignment = View.TEXT_ALIGNMENT_CENTER
                 tRow.addView(tView)
 
-                //testo3: tipoProdotto
-                tView = TextView(this)
-
-                var tipo:String = "N"
+                //immagine tipoProdotto
+                val imageview = ImageView(this)
+                var originalDrawable = resources.getDrawable(R.drawable.all_foods, null)
                 when(tipoprodotto){
-                    "panino" -> tipo = "PA"
-                    "pizza" -> tipo = "PI"
-                    "sushi" -> tipo = "SU"
+                    "panino" -> originalDrawable = resources.getDrawable(R.drawable.hamburger_top, null)
+                    "pizza" -> originalDrawable = resources.getDrawable(R.drawable.pizza2, null)
+                    "sushi" -> originalDrawable = resources.getDrawable(R.drawable.sushi, null)
                 }
-                tView.text = tipo
-                tView.textSize = 20f
-                tView.textAlignment = View.TEXT_ALIGNMENT_CENTER
-                tRow.addView(tView)
+
+                val originalBitmap = (originalDrawable as BitmapDrawable).bitmap
+
+                val newWidthInDp = 12
+                val newHeightInDp = 12
+
+                val density = resources.displayMetrics.density
+                val newWidth = (newWidthInDp * density).toInt()
+                val newHeight = (newHeightInDp * density).toInt()
+
+                val resizedBitmap = Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true)
+                val resizedDrawable = BitmapDrawable(resources, resizedBitmap)
+                imageview.setImageDrawable(resizedDrawable)
+
+
+                tRow.gravity=1
+                tRow.addView(imageview)
 
                 tableLayout.addView(tRow)
             } while (cursor.moveToNext())
@@ -125,17 +145,36 @@ class Ristorante : AppCompatActivity() {
             val intent = Intent(this,Recensione::class.java)
             intent.putExtra("idRistorante",idRistorante)
             startActivity(intent)
-
-            //codice di debug per resettare il database
-            //dbHelper.deleteDatabase(this)
-            //Toast.makeText(this,"Database eliminato",Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun inizializzaDimTabella() {
+        val prod = findViewById<TextView>(R.id.prodotto)
+        val prezzo = findViewById<TextView>(R.id.prezzo)
+        val tipo = findViewById<TextView>(R.id.tipo)
+
+        val scroll = findViewById<ScrollView>(R.id.scrollView)
+
+        prod.width = (4/10) * (scroll.width / 3)
+        prezzo.width = (4/10) * (scroll.width / 3)
+        tipo.width = (2/10) * (scroll.width / 3)
     }
 
     internal fun aggiungiPrenotazione(idRistorante: String?, giornoString: String, db:SQLiteDatabase) {
         numPrenotazioni++
-        val stringhe = arrayOf(numPrenotazioni, giornoString, idRistorante)
-        db.execSQL("UPDATE Ristorante SET numPrenotazioni=?, ultimoGiorno = ? WHERE _id=?", stringhe)
+
+        //rimuovo vecchio ultimoGiorno se esiste
+        val cursor = db.query("Ristorante", arrayOf("_id"),"ultimoGiorno = ?",
+            arrayOf(giornoString),null,null,null)
+
+        if(cursor.moveToFirst()){//se la query non è null (c'è un ristorante con giornoString)
+            val indexId = cursor.getColumnIndex("_id")
+            val idVecchio = cursor.getString(indexId)
+            db.execSQL("UPDATE Ristorante SET ultimoGiorno = NULL WHERE _id=?", arrayOf(idVecchio))
+        }
+        cursor.close()
+        //inserisco nuovo ultimoGiorno
+        db.execSQL("UPDATE Ristorante SET numPrenotazioni=?, ultimoGiorno = ? WHERE _id=?", arrayOf(numPrenotazioni, giornoString, idRistorante))
         //aggiorno scritta di benvenuto con il nuovo contatore
         val tvNomeRistorante = findViewById<TextView>(R.id.nomeRistorante)
         tvNomeRistorante.text = getString(R.string.benvenuto,nomeRistorante,numPrenotazioni)

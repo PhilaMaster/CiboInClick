@@ -5,8 +5,9 @@
     <string name="buttonChiama">Book</string>
     <string name="chiamaTel">Call +39%1$s</string>
     <string name="prezzo">%1$.2f$</string>
-    <string name="Prezzo">PRICE</string>
-    <string name="Prodotto">PRODUCT</string>
+    <string name="Prezzo">Price</string>
+    <string name="Prodotto">Product</string>
+    <string name="Tipo">Type</string>
     <string name="Menù">MENU\'</string>
     <string name="benvenuto">Welcome to %1$s, recently you ordered %2$d times. What would you like to order?</string>
 
@@ -24,6 +25,7 @@
     <string name="vota_cibo">Food rating:</string>
     <string name="vota_prezzo">Price rating:</string>
     <string name="conferma_recensione">Submit!</string>
+    <string name="recensioni_nome_ristorante">Reviews - Restaurant name</string>
 
 
     <!-- MainActivity-->
@@ -34,6 +36,11 @@
     <string name="mangiareNotte">Good evening, it\'s very late, night snack?</string>
     <string name="ultimaPText">Last time you ordered from %1$s, do you want to go again?</string>
     <string name="ultimoGText">Last %1$s you ate at %2$s, do you want to book?</string>
+    <string name="prenota">Book %1$s</string>
+
+    <!-- Mappa -->
+    <string name="seiA">You are in %1$s</string>
+
 
     <string name = "my_map_api_key">AIzaSyAkbI1wDdws2ErfJT4dAuxht0pKX7MiVtk</string>
 </resources>

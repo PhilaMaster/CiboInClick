@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun gestioneOrario() {
-        val textView2: TextView = findViewById(R.id.textView2)
+        val textView2: TextView = findViewById(R.id.prezzo)
 
         val currentTime = Calendar.getInstance().time
         val hourFormat = SimpleDateFormat("HH", Locale.getDefault())
@@ -114,7 +114,7 @@ class MainActivity : AppCompatActivity() {
 
             button1.visibility = View.VISIBLE
             text1.visibility = View.VISIBLE
-            button1.text = "Prenota $nome"
+            button1.text = getString(R.string.prenota, nome)
             text1.text = getString(R.string.ultimaPText,nome)
             button1.setOnClickListener {
                 val intent = Intent(this, Ristorante::class.java)
@@ -166,7 +166,7 @@ class MainActivity : AppCompatActivity() {
 
                     button2.visibility = View.VISIBLE
                     text2.visibility = View.VISIBLE
-                    button2.text = "Prenota $nome"
+                    button2.text = getString(R.string.prenota,nome)
                     text2.text = getString(R.string.ultimoGText,giornoAttuale,nome)
 
                     button2.setOnClickListener {

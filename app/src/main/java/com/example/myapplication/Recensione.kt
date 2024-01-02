@@ -12,7 +12,6 @@ import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.myapplication.MyDbHelper
 
 
 class Recensione : AppCompatActivity() {
@@ -38,11 +37,11 @@ class Recensione : AppCompatActivity() {
             val nomeRistorante = qualeRistorante.getString(qualeRistorante.getColumnIndex("nome"))
 
             // Inserisci i valori in TextView
-            val etichettaRistorante = findViewById<TextView>(R.id.textView2)
+            val etichettaRistorante = findViewById<TextView>(R.id.prezzo)
             etichettaRistorante.text = nomeRistorante
         } else {
             // Gestisco il caso in cui non trovo ristoranti
-            val etichettaRistorante = findViewById<TextView>(R.id.textView2)
+            val etichettaRistorante = findViewById<TextView>(R.id.prezzo)
             etichettaRistorante.text = "Ristorante non trovato :("
         }
 
