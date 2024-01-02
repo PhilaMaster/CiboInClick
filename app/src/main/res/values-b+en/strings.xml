@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="infoChiamata">Attenzione: per prenotare, si prega di chiamare con qualche ora di anticipo usando l\'apposito tasto in basso.</string>
+    <string name="infoChiamata">Attention: To make a reservation, please call with a few hours using the button below.</string>
     <string name="buttonRecensioni">Reviews</string>
     <string name="buttonChiama">Book</string>
     <string name="chiamaTel">Call +39%1$s</string>
