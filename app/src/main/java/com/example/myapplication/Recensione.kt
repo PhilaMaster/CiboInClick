@@ -18,7 +18,7 @@ class Recensione : AppCompatActivity() {
     @SuppressLint("Range")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.recensione)
+        setContentView(R.layout.activity_recensione)
 
 
         val dbHelper = MyDbHelper(this)
