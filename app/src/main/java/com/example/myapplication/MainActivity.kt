@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         val mappa4 = findViewById<ImageButton>(R.id.imageButton4)
         mappa3.setOnClickListener {
             val intent = Intent(this, Mappa::class.java)
-            intent.putExtra("Chiave", "sushi")
+            intent.putExtra("Chiave", "*")
             startActivity(intent)
         }
 
@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
 
         this.gestioneOrario()
         this.gestioneVisibilitàBottoneUlt()
-        this.gestionePrenotazioneStessoGiorno() //Devo mandare i put extra a Pasquale
+        this.gestionePrenotazioneStessoGiorno()
 
     }
 

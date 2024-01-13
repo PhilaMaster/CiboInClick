@@ -1,8 +1,6 @@
 package com.example.myapplication
 
 import android.Manifest
-import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -10,74 +8,112 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.maps.GoogleMap
 import android.database.sqlite.*
-import android.widget.ArrayAdapter
-import android.widget.ListView
-import org.osmdroid.api.IMapController
-import org.osmdroid.tileprovider.tilesource.TileSourceFactory
-import org.osmdroid.util.GeoPoint
-import org.osmdroid.views.MapView
-import org.osmdroid.views.overlay.Marker
-import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
+import android.location.Address
+import android.location.Geocoder
+import android.location.Location
+import android.location.LocationListener
 import android.widget.TableLayout
 import android.widget.TableRow
+import android.location.LocationManager
 import android.widget.TextView
-import android.location.*
-import android.view.Gravity
 import android.widget.Button
-import android.widget.ImageButton
-import android.widget.LinearLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.example.myapplication.MyDbHelper
-import com.example.myapplication.R
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import org.osmdroid.config.Configuration
-import org.w3c.dom.Text
 import java.io.IOException
+import java.security.Provider
 import java.util.Locale
+import kotlin.properties.Delegates
 
 
-class Mappa: AppCompatActivity(), OnMapReadyCallback{
+class Mappa: AppCompatActivity(), OnMapReadyCallback, LocationListener {
+
 
     private val dbHelper = MyDbHelper(this)
     private lateinit var myMap: GoogleMap
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private val locationPermissionCode = 123
+    private var permessi: Boolean = false
 
 
-    override fun onCreate(savedInstanceState: Bundle?)
-        {
-            super.onCreate(savedInstanceState)
-            setContentView(R.layout.activity_mappa)
-            var mapFragment: SupportMapFragment? = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
-            mapFragment?.getMapAsync(this)
-            this.gestioneEstrazioneDati()
-            fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_mappa)
+        var mapFragment: SupportMapFragment? =
+            supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+        mapFragment?.getMapAsync(this)
+        this.gestioneEstrazioneDati()
 
-            // Verifica e richiedi i permessi di localizzazione
-            if (ActivityCompat.checkSelfPermission(
-                    this,
-                    android.Manifest.permission.ACCESS_FINE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED
-            ) {
-                requestLocation()
-            } else {
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
-                    MY_PERMISSIONS_REQUEST_LOCATION
-                )
+        var statoPermission = ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)
+        val locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
+        if(statoPermission != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),locationPermissionCode)
+
+        }
+        else{
+            Toast.makeText(this,"Hai già i permessi",Toast.LENGTH_SHORT).show()
+        }
+
+         statoPermission = ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)
+        if(statoPermission == PackageManager.PERMISSION_GRANTED){
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,5000,500f,this)
+            permessi = true
+        }
+
+
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if(requestCode == locationPermissionCode){
+            if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                Toast.makeText(this,"Accesso Autorizzato",Toast.LENGTH_SHORT).show()
             }
+            else{
+                Toast.makeText(this,"Accesso Negato",Toast.LENGTH_SHORT).show()
             }
+        }
+    }
+
+    override fun onProviderEnabled(provider: String) {
+        super.onProviderEnabled(provider)
+
+    }
+
+    override fun onLocationChanged(p0: Location) {
+
+        val currentLatLng = LatLng(p0.latitude, p0.longitude)
+        myMap.addMarker(MarkerOptions().position(currentLatLng).title("La mia posizione"))
+        myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f))
+        Toast.makeText(this,"Aggiornamento ${p0.longitude},${p0.latitude}",Toast.LENGTH_SHORT).show()
+        val cityName = getCityName(p0)
+        val message = getString(R.string.seiA, cityName)
+        val cityTextView: TextView = findViewById(R.id.textbox1)
+        cityTextView.text = message
+    }
 
 
+    private fun getCityName(location: Location): String {
+        val geocoder = Geocoder(this, Locale.getDefault())
+        try {
+            val addresses: MutableList<Address>? = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+            if (addresses != null) {
+                if (addresses.isNotEmpty()) {
+                    val city = addresses?.get(0)?.locality
+                    if (city != null && city.isNotEmpty()) {
+                        return city
+                    }
+                }
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return "Città sconosciuta"
+    }
     fun gestioneEstrazioneDati(){
         var db: SQLiteDatabase = dbHelper.writableDatabase //apro il db
         val datoRicevuto = intent.getStringExtra("Chiave")  //qui dentro ho pizza, panino, sushi o tutto
@@ -105,7 +141,6 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback{
             val indexTipo = cursor.getColumnIndex("tipo")
             val tipo = cursor.getString(indexTipo)
 
-            Toast.makeText(this, "Nome: $nome, Tipo: $tipo", Toast.LENGTH_SHORT).show()
 
             // Crea celle TextView e aggiungile alla riga
             val button = Button(this)
@@ -121,61 +156,10 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback{
             tableRow.addView(button)
 
 
-
             // Aggiungi la riga al TableLayout
             tableLayout.addView(tableRow)
         }
         cursor.close()  // Chiudi il Cursor dopo aver estratto i dati
-    }
-
-    private fun requestLocation() {
-        // Ottieni la posizione attuale
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return
-        }
-        fusedLocationClient.lastLocation
-            .addOnSuccessListener { location: Location? ->
-                if (location != null) {
-                    val currentLatLng = LatLng(location.latitude, location.longitude)
-                    myMap.addMarker(MarkerOptions().position(currentLatLng).title("La mia posizione"))
-                    myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f))
-                    val cityName = getCityName(location)
-                    val message = getString(R.string.seiA,cityName)
-                    val cityTextView: TextView = findViewById(R.id.textbox1)
-                    cityTextView.text = message
-                }
-            }
-    }
-    private fun getCityName(location: Location): String {
-        val geocoder = Geocoder(this, Locale.getDefault())
-        try {
-            val addresses: MutableList<Address>? = geocoder.getFromLocation(location.latitude, location.longitude, 1)
-            if (addresses != null) {
-                if (addresses.isNotEmpty()) {
-                    val city = addresses?.get(0)?.locality
-                    if (city != null && city.isNotEmpty()) {
-                        return city
-                    }
-                }
-            }
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-        return "Città sconosciuta"
     }
     override fun onMapReady(p0: GoogleMap) {
         myMap = p0
@@ -219,9 +203,8 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback{
 
     }
 
-    companion object {
-        private const val MY_PERMISSIONS_REQUEST_LOCATION = 99
-    }
+
+
 }
 
 
