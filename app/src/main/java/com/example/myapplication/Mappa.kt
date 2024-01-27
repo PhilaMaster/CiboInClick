@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.maps.GoogleMap
 import android.database.sqlite.*
-import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
@@ -16,21 +15,21 @@ import android.location.LocationListener
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.location.LocationManager
-import android.view.Gravity
 import android.widget.TextView
 import android.widget.Button
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-
+import android.content.Context
+import android.graphics.Point
+import android.os.Build
+import android.view.WindowManager
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import java.io.IOException
-import java.security.Provider
 import java.util.Locale
-import kotlin.properties.Delegates
 
 
 class Mappa: AppCompatActivity(), OnMapReadyCallback, LocationListener {
@@ -173,12 +172,15 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback, LocationListener {
 
 
             button.text = "$nome , $tipo"
-            val b = 200 // Dimensione del pulsante in dp
-            val scale = resources.displayMetrics.density
-            val buttonSize = (b*scale).toInt()
-            val params = TableRow.LayoutParams(buttonSize, TableRow.LayoutParams.WRAP_CONTENT)
+
+            //val scrollsus = findViewById<ScrollView>(R.id.sus)
+
+            val screenSize = ScreenUtils.getScreenSize(this)
+            val screenWidth = screenSize.x
+            val params = TableRow.LayoutParams(screenWidth, TableRow.LayoutParams.WRAP_CONTENT)
             button.layoutParams = params
-            // Set button width to match_parent
+
+
 
             button.setOnClickListener {
                 val intent = Intent(this, Ristorante::class.java)
@@ -257,5 +259,21 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback, LocationListener {
 }
 
 
+class ScreenUtils {
+    companion object {
+        fun getScreenSize(context: Context): Point {
+            val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+            val display = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                context.display
+            } else {
+                windowManager.defaultDisplay
+            }
+
+            val size = Point()
+            display?.getSize(size)
+            return size
+        }
+    }
+}
 
 
