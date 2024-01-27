@@ -46,6 +46,10 @@
     <!-- Mappa -->
     <string name="seiA">Sei a %1$s</string>
 
+
+    <string name="nomeR">Nome</string>
+    <string name="ciboR">Cibo</string>
+    <string name="prezzoR">Prezzo</string>
     <string name = "my_map_api_key">AIzaSyAkbI1wDdws2ErfJT4dAuxht0pKX7MiVtk</string>
 
 

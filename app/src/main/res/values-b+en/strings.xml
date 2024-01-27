@@ -42,5 +42,7 @@
     <string name="seiA">You are in %1$s</string>
 
 
+
+    <string name="nomeR">Name</string>     <string name="ciboR">Food</string>     <string name="prezzoR">Price</string>
     <string name = "my_map_api_key">AIzaSyAkbI1wDdws2ErfJT4dAuxht0pKX7MiVtk</string>
 </resources>
