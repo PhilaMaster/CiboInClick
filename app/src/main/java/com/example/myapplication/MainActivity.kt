@@ -1,15 +1,20 @@
 package com.example.myapplication
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.database.sqlite.SQLiteDatabase
+import android.graphics.Point
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -21,6 +26,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val conLay3 = findViewById<ConstraintLayout>(R.id.constraintLayout3)
+        val screenSize = ScreenUtils.getScreenSize(this)
+        val screenWidth = screenSize.x
+        conLay3.layoutParams.width = screenWidth
 
         val mappa = findViewById<ImageButton>(R.id.imageButton)
         mappa.setOnClickListener {
@@ -62,6 +71,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun gestioneOrario() {
         val textView2: TextView = findViewById(R.id.prezzo)
+        val screenSize = ScreenUtils.getScreenSize(this)
+        val screenWidth = screenSize.x
+        textView2.layoutParams.width = screenWidth
 
         val currentTime = Calendar.getInstance().time
         val hourFormat = SimpleDateFormat("HH", Locale.getDefault())
@@ -90,6 +102,9 @@ class MainActivity : AppCompatActivity() {
         var db: SQLiteDatabase = mioDb.writableDatabase
         val button1: Button = findViewById(R.id.bottoneUltimaPren)
         val text1: TextView = findViewById(R.id.textUltimaPrent)
+        val screenSize = ScreenUtils.getScreenSize(this)
+        val screenWidth = screenSize.x
+        text1.layoutParams.width = screenWidth
 
         button1.visibility = View.GONE
         text1.visibility = View.GONE
@@ -147,6 +162,11 @@ class MainActivity : AppCompatActivity() {
             val text2: TextView = findViewById(R.id.textUltimoGiorno)
             button2.visibility = View.GONE
             text2.visibility = View.GONE
+            val screenSize = ScreenUtils.getScreenSize(this)
+            val screenWidth = screenSize.x
+            text2.layoutParams.width = screenWidth
+
+
 
             val giornoAttuale = giornoCorrente()
             val selectionArgs = arrayOf(giornoAttuale)

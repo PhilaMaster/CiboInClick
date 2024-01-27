@@ -30,7 +30,7 @@
 
 
     <!-- MainActivity-->
-    <string name="cambiaLingua">Cambia lingua</string>
+    <string name="cambiaLingua">Cambia lingua \ud83c\uddec\ud83c\udde7</string>
     <string name="mangiareGiorno">Buongiorno, si avvicina l\'ora di pranzo. Cosa vuoi mangiare?</string>
     <string name="mangiarePomeriggio">Buon pomeriggio, cosa vuoi mangiare?</string>
     <string name="mangiareSera">Buonasera, si avvicina l\'ora di cena. Cosa vuoi mangiare?</string>

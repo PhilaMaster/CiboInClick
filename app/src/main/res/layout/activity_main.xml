@@ -74,7 +74,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout3"
-        android:layout_width="wrap_content"
+        android:layout_width="400dp"
         android:layout_height="145dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
@@ -94,13 +94,10 @@
             android:id="@+id/tipo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="91dp"
             android:text="@string/app_name"
             android:textColor="@color/black"
             android:textSize="30sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/cambiaLingua"
-            app:layout_constraintEnd_toStartOf="@+id/cambiaLingua"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -143,13 +140,12 @@
             android:id="@+id/textUltimaPrent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="27dp"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textUltimoGiorno"
@@ -162,23 +158,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
-            android:text="@string/sito"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <Button
             android:id="@+id/bottoneUltimaPren"
             android:layout_width="130dp"
-            android:layout_height="69dp"
+            android:layout_height="wrap_content"
             android:width="60dp"
             android:height="70dp"
             android:backgroundTint="#D1C4E9"
@@ -192,7 +175,7 @@
         <Button
             android:id="@+id/bottoneUltimoGiorno"
             android:layout_width="130dp"
-            android:layout_height="69dp"
+            android:layout_height="wrap_content"
             android:width="60dp"
             android:height="70dp"
             android:backgroundTint="#D1C4E9"

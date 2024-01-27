@@ -29,7 +29,7 @@
 
 
     <!-- MainActivity-->
-    <string name="cambiaLingua">Change language</string>
+    <string name="cambiaLingua">Change language \ud83c\uddec\ud83c\udde7</string>
     <string name="mangiareGiorno">Goodmorning, lunch time is near. What would you like to eat?</string>
     <string name="mangiarePomeriggio">Good afternoon, What would you like to eat?</string>
     <string name="mangiareSera">Good evening, dinner time is near. What would you like to eat?</string>
