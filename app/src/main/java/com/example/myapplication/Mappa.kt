@@ -39,7 +39,7 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback, LocationListener {
     private val dbHelper = MyDbHelper(this)
     private lateinit var myMap: GoogleMap
     private val locationPermissionCode = 123
-    private var permessi: Boolean = false
+    private var permessi: Boolean = true
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,19 +55,22 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback, LocationListener {
         super.onResume()
         var statoPermission = ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)
         val locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
-        if(statoPermission != PackageManager.PERMISSION_GRANTED){
+        if(statoPermission != PackageManager.PERMISSION_GRANTED && permessi){
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),locationPermissionCode)
 
         }
-        else{
-            Toast.makeText(this,"Hai già i permessi",Toast.LENGTH_SHORT).show()
+        else {
+            Toast.makeText(this,"Hai già i permessi o hai rifiutato",Toast.LENGTH_SHORT).show()
         }
 
         statoPermission = ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)
         if(statoPermission == PackageManager.PERMISSION_GRANTED){
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,5000,500f,this)
-            permessi = true
+
             Toast.makeText(this, "sussone", Toast.LENGTH_SHORT).show()
+        }
+        else {
+            permessi = false
         }
     }
 
