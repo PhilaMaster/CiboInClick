@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
         val mappa4 = findViewById<ImageButton>(R.id.imageButton4)
-        mappa3.setOnClickListener {
+        mappa4.setOnClickListener {
             val intent = Intent(this, Mappa::class.java)
             intent.putExtra("Chiave", "*")
             startActivity(intent)

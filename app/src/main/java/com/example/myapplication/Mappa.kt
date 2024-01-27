@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.maps.GoogleMap
 import android.database.sqlite.*
+import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
@@ -15,6 +16,7 @@ import android.location.LocationListener
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.location.LocationManager
+import android.view.Gravity
 import android.widget.TextView
 import android.widget.Button
 import androidx.core.app.ActivityCompat
@@ -58,9 +60,9 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback, LocationListener {
             Toast.makeText(this,"Hai già i permessi",Toast.LENGTH_SHORT).show()
         }
 
-         statoPermission = ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)
+        statoPermission = ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)
         if(statoPermission == PackageManager.PERMISSION_GRANTED){
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,5000,500f,this)
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,5000,500f,this)
             permessi = true
         }
 
@@ -115,26 +117,40 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback, LocationListener {
         return "Città sconosciuta"
     }
     fun gestioneEstrazioneDati(){
-        var db: SQLiteDatabase = dbHelper.writableDatabase //apro il db
-        val datoRicevuto = intent.getStringExtra("Chiave")  //qui dentro ho pizza, panino, sushi o tutto
+        var db: SQLiteDatabase = dbHelper.writableDatabase // apro il db
+        val datoRicevuto = intent.getStringExtra("Chiave")
 
-        val selectionArgs = arrayOf(datoRicevuto) //estraggo in base al tipo che mi arriva dal put extra
-        val cursor = db.rawQuery("SELECT DISTINCT r.nome,m.tipo,r._id " +
-                "                       FROM Ristorante r, Menu m " +
-                "                       WHERE r._id=m.ristorante AND" +
-                "                             tipo = ?",selectionArgs)
+        val selection: String?
+        val selectionArgs: Array<String?>
+
+        if (datoRicevuto == "*") {
+            // Query senza'tipo'
+            selection = null
+            selectionArgs = emptyArray()
+        } else {
+            selection = "tipo = ?"
+            selectionArgs = arrayOf(datoRicevuto)
+        }
+
+
+        val queryBuilder = StringBuilder()
+        queryBuilder.append("SELECT DISTINCT r.nome, m.tipo, r._id FROM Ristorante r, Menu m WHERE r._id = m.ristorante ")
+        if (selection != null) {
+            queryBuilder.append("AND $selection")
+        }
+
+        val cursor = db.rawQuery(queryBuilder.toString(), selectionArgs)
+
 
         val tableLayout = findViewById<TableLayout>(R.id.tables)
 
         while (cursor.moveToNext()) {
-            // Crea una nuova riga
-            val tableRow = TableRow(this)
 
-            // Ottieni i dati dalla query
+            // Retrieve data from the query
             val indexNome = cursor.getColumnIndex("nome")
             val nome = cursor.getString(indexNome)
 
-            //  Toast.makeText(this,nome,Toast.LENGTH_SHORT).show()
+            // Toast.makeText(this,nome,Toast.LENGTH_SHORT).show()
             val indexId = cursor.getColumnIndex("_id")
             val id = cursor.getString(indexId)
 
@@ -142,9 +158,25 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback, LocationListener {
             val tipo = cursor.getString(indexTipo)
 
 
-            // Crea celle TextView e aggiungile alla riga
+            /* Set row width to match_parent
+            row.layoutParams = TableRow.LayoutParams(
+                TableRow.LayoutParams.MATCH_PARENT,
+                TableRow.LayoutParams.WRAP_CONTENT
+            )
+            row.setBackgroundColor(resources.getColor(android.R.color.darker_gray))
+
+            */
+            // Create cell TextViews and add them to the row
             val button = Button(this)
+
+
             button.text = "$nome , $tipo"
+            val b = 200 // Dimensione del pulsante in dp
+            val scale = resources.displayMetrics.density
+            val buttonSize = (b*scale).toInt()
+            val params = TableRow.LayoutParams(buttonSize, TableRow.LayoutParams.WRAP_CONTENT)
+            button.layoutParams = params
+            // Set button width to match_parent
 
             button.setOnClickListener {
                 val intent = Intent(this, Ristorante::class.java)
@@ -152,25 +184,40 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback, LocationListener {
                 intent.putExtra("ChiaveTipo", tipo)
                 startActivity(intent)
             }
+            val row = TableRow(this)
+            row.addView(button)
+            tableLayout.addView(row)
+            // Add the row to the TableLayout
 
-            tableRow.addView(button)
-
-
-            // Aggiungi la riga al TableLayout
-            tableLayout.addView(tableRow)
         }
-        cursor.close()  // Chiudi il Cursor dopo aver estratto i dati
+        cursor.close()  // Close the Cursor after extracting the data
     }
     override fun onMapReady(p0: GoogleMap) {
         myMap = p0
         var db: SQLiteDatabase = dbHelper.writableDatabase // apro il db
 
         val datoRicevuto = intent.getStringExtra("Chiave")  // qui dentro ho pizza, panino, sushi o tutto*
-        val selectionArgs = arrayOf(datoRicevuto) // estraggo in base al tipo che mi arriva dal put extra
-        val cursor = db.rawQuery("SELECT DISTINCT r.longitudine,r.latitudine,r.nome " +
-                "FROM Ristorante r, Menu m " +
-                "WHERE r._id=m.ristorante AND" +
-                " tipo = ?", selectionArgs)
+
+        val selection: String?
+        val selectionArgs: Array<String?>
+
+        if (datoRicevuto == "*") {
+            // Query senza'tipo'
+            selection = null
+            selectionArgs = emptyArray()
+        } else {
+            selection = "tipo = ?"
+            selectionArgs = arrayOf(datoRicevuto)
+        }
+
+
+        val queryBuilder = StringBuilder()
+        queryBuilder.append("SELECT DISTINCT r.longitudine, r.latitudine, r.nome FROM Ristorante r, Menu m WHERE r._id = m.ristorante ")
+        if (selection != null) {
+            queryBuilder.append("AND $selection")
+        }
+
+        val cursor = db.rawQuery(queryBuilder.toString(), selectionArgs)
 
         var firstLocation: LatLng? = null
 
@@ -206,5 +253,7 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback, LocationListener {
 
 
 }
+
+
 
 
