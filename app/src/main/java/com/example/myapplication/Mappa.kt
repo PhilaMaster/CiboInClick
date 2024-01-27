@@ -20,6 +20,7 @@ import android.widget.Button
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import android.content.Context
+import android.graphics.Color
 import android.graphics.Point
 import android.os.Build
 import android.view.WindowManager
@@ -179,7 +180,8 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback, LocationListener {
             val screenWidth = screenSize.x
             val params = TableRow.LayoutParams(screenWidth, TableRow.LayoutParams.WRAP_CONTENT)
             button.layoutParams = params
-
+            button.backgroundTintList = getColorStateList(R.color.coloreVioletto)
+            button.setTextColor(Color.BLACK)
 
 
             button.setOnClickListener {
