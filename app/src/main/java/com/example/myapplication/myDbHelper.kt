@@ -51,10 +51,10 @@ class MyDbHelper(context: Context): SQLiteOpenHelper(context, "mydatabase.db", n
         //pizza
 
         p0.execSQL("INSERT INTO Ristorante (_id,nome,telefono,numPrenotazioni, ultimoGiorno, longitudine,latitudine) VALUES " +
-                "(5,\"Mammarè\",\"3495639913\",7,\"lunedì\",39.3443109232684, 16.244396367539355)," +
-                "(6,\"Pizza Rosso\",\"3515733575\",3,\"mercoledì\",39.34585845258052, 16.242164880529803)," +
-                "(7,\"Doppiozero\",\"0984456419\",2,\"martedì\",39.352578669588496, 16.238989145111344)," +
-                "(8,\"Stop Pizza\",\"0984838375\",2,\"venerdì\",39.35146150573715, 16.244095244086427);")
+                "(5,\"Mammarè\",\"3495639913\",7,\"null\",39.3443109232684, 16.244396367539355)," +
+                "(6,\"Pizza Rosso\",\"3515733575\",3,\"lunedì\",39.34585845258052, 16.242164880529803)," +
+                "(7,\"Doppiozero\",\"0984456419\",2,\"null\",39.352578669588496, 16.238989145111344)," +
+                "(8,\"Stop Pizza\",\"0984838375\",2,\"null\",39.35146150573715, 16.244095244086427);")
 
         p0.execSQL("INSERT INTO Menu (ristorante,nome,tipo,prezzo) VALUES" +
                 "(5,\"Margherita\",\"pizza\",5.99)," +
@@ -77,10 +77,10 @@ class MyDbHelper(context: Context): SQLiteOpenHelper(context, "mydatabase.db", n
         //sushi
 
         p0.execSQL("INSERT INTO Ristorante (_id,nome,telefono,numPrenotazioni, ultimoGiorno, longitudine,latitudine) VALUES " +
-                "(9,\"Sushi Kokusai\",\"09841803721\",4,\"lunedì\",39.35004872447723, 16.242741655210985)," +
-                "(10,\"888 Sushi\",\"09841453766\",1,\"mercoledì\",39.354224213458075, 16.24089178100956)," +
-                "(11,\"Boa Sorte\",\"09841455067\",2,\"martedì\",39.33507153590957, 16.24279755359297)," +
-                "(12,\"Sushi Garden\",\"0984306182\",3,\"martedì\",39.32632723167703, 16.248763574935246);")
+                "(9,\"Sushi Kokusai\",\"09841803721\",4,\"sabato\",39.35004872447723, 16.242741655210985)," +
+                "(10,\"888 Sushi\",\"09841453766\",1,\"null\",39.354224213458075, 16.24089178100956)," +
+                "(11,\"Boa Sorte\",\"09841455067\",2,\"null\",39.33507153590957, 16.24279755359297)," +
+                "(12,\"Sushi Garden\",\"0984306182\",3,\"domenica\",39.32632723167703, 16.248763574935246);")
 
         p0.execSQL("INSERT INTO Menu (ristorante,nome,tipo,prezzo) VALUES" +
                 "(9,\"All you can eat\",\"sushi\",15.99)," +
@@ -148,7 +148,7 @@ class MyDbHelper(context: Context): SQLiteOpenHelper(context, "mydatabase.db", n
         TODO("Not yet implemented")
     }
 
-    fun deleteDatabase(context: Context){
+    fun deleteDatabase(context: Context){//funzione di debug
         context.getDatabasePath("mydatabase.db").delete()
     }
 

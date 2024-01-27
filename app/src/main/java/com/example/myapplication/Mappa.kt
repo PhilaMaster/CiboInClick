@@ -49,7 +49,10 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback, LocationListener {
             supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
         this.gestioneEstrazioneDati()
+    }
 
+    override fun onResume() {
+        super.onResume()
         var statoPermission = ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)
         val locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
         if(statoPermission != PackageManager.PERMISSION_GRANTED){
@@ -62,11 +65,10 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback, LocationListener {
 
         statoPermission = ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)
         if(statoPermission == PackageManager.PERMISSION_GRANTED){
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,5000,500f,this)
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,5000,500f,this)
             permessi = true
+            Toast.makeText(this, "sussone", Toast.LENGTH_SHORT).show()
         }
-
-
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
