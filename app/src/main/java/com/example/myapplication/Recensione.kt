@@ -109,9 +109,9 @@ class Recensione : AppCompatActivity() {
             // Creazione della riga delle etichette
             val labelRow = TableRow(this)
             labelRow.setBackgroundColor(resources.getColor(android.R.color.holo_purple))
-            labelRow.addView(createLabelTextView("Nome"))
-            labelRow.addView(createLabelTextView("Cibo"))
-            labelRow.addView(createLabelTextView("Prezzo"))
+            labelRow.addView(createLabelTextView(getString(R.string.nomeR)))
+            labelRow.addView(createLabelTextView(getString(R.string.ciboR)))
+            labelRow.addView(createLabelTextView(getString(R.string.prezzoR)))
             tableLayout.addView(labelRow)
 
             // Variabile per alternare i colori

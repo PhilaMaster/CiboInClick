@@ -19,14 +19,16 @@
     <string name="sabato">saturday</string>
     <string name="domenica">sunday</string>
 
-    <string name="cibo_r">FOOD:</string>
-    <string name="prezzo_r">PRICE:</string>
+    <string name="cibo_r">Food:</string>
+    <string name="prezzo_r">Price:</string>
     <string name="inserimento_nome_r">Enter your name</string>
     <string name="vota_cibo">Food rating:</string>
     <string name="vota_prezzo">Price rating:</string>
     <string name="conferma_recensione">Submit!</string>
     <string name="recensioni_nome_ristorante">Reviews - Restaurant name</string>
-
+    <string name="nomeR">Name</string>
+    <string name="ciboR">Food</string>
+    <string name="prezzoR">Price</string>
 
     <!-- MainActivity-->
     <string name="cambiaLingua">Change language \ud83c\uddec\ud83c\udde7</string>
@@ -43,6 +45,6 @@
 
 
 
-    <string name="nomeR">Name</string>     <string name="ciboR">Food</string>     <string name="prezzoR">Price</string>
+
     <string name = "my_map_api_key">AIzaSyAkbI1wDdws2ErfJT4dAuxht0pKX7MiVtk</string>
 </resources>
