@@ -160,7 +160,7 @@ class Recensione : AppCompatActivity() {
 
         // Chiamato per inizializzare e aggiornare la visualizzazione delle recensioni
         fun aggiornaRecensioni() {
-            val recensioniCursor = dbHelper.getRecensioniByRistoranteId(idRistorante.toString()) // Sostituire con l'ID del ristorante corrente
+            val recensioniCursor = dbHelper.getRecensioniByRistoranteId(idRistorante.toString()) // ID del ristorante corrente
             mostraRecensioni(recensioniCursor)
         }
 
@@ -183,7 +183,7 @@ class Recensione : AppCompatActivity() {
             if (nomeDaInserire.isNotEmpty() && numStelleCibo > 0 && numStellePrezzo > 0) {
                 // Crea un oggetto ContentValues per inserire i dati nel database
                 val values = ContentValues()
-                values.put("ristorante", 1) // Sostituire con l'id del ristorante corrente
+                values.put("ristorante", idRistorante) //id ristorante corrente
                 values.put("nomeRecensore", nomeDaInserire)
                 values.put("votoPrezzo", numStellePrezzo)
                 values.put("votoCibo", numStelleCibo)
