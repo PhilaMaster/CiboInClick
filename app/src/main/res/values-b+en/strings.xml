@@ -38,7 +38,7 @@
     <string name="mangiarePomeriggio">Good afternoon, What would you like to eat?</string>
     <string name="mangiareSera">Good evening, dinner time is near. What would you like to eat?</string>
     <string name="mangiareNotte">Good evening, it\'s very late, night snack?</string>
-    <string name="ultimaPText">Last time you ordered from %1$s, do you want to go again?</string>
+    <string name="ultimaPText">You\'ve been ordering from %1$s a lot lately, do you want to go again?</string>
     <string name="ultimoGText">Last %1$s you ate at %2$s, do you want to book?</string>
     <string name="prenota">Book %1$s</string>
 

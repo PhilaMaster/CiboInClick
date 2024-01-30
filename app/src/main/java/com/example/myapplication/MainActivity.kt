@@ -74,26 +74,23 @@ class MainActivity : AppCompatActivity() {
 
         val currentTime = Calendar.getInstance().time
         val hourFormat = SimpleDateFormat("HH", Locale.getDefault())
-        val currentHour = hourFormat.format(currentTime).toInt()
 
         // Aggiorno il text view in base all'orario
-        when {
-            currentHour in 5..13 -> {
+        when (hourFormat.format(currentTime).toInt()) {
+            in 5..13 -> {
                 textView2.text = getString(R.string.mangiareGiorno)
             }
-
-            currentHour in 14..17 -> {
+            in 14..17 -> {
                 textView2.text = getString(R.string.mangiarePomeriggio)
             }
-
-            currentHour in 18..22  -> {
+            in 18..22 -> {
                 textView2.text = getString(R.string.mangiareSera)
             }
             else -> textView2.text = getString(R.string.mangiareNotte)
         }
     }
 
-    fun gestioneVisibilitaBottoneUlt() {
+    private fun gestioneVisibilitaBottoneUlt() {
         //In questo metodo gestisco la comparsa/scomparsa del bottone e della text view
         //riguardanti il locale prenotato più spesso
         val db: SQLiteDatabase = mioDb.writableDatabase
@@ -213,7 +210,7 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-    private fun setLocale(activity: Activity, languageCode: String) {
+    private fun setLocale(activity: Activity, @Suppress("SameParameterValue") languageCode: String) {
         val locale = Locale(languageCode)
         Locale.setDefault(locale)
         val resources = activity.resources

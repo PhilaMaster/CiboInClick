@@ -42,7 +42,7 @@
     <string name="sito" translatable="false">www.ciboinclick.it</string>
     <string name="ultimaPButton" translatable="false">ultimaP</string>
     <string name="ultimoGButton" translatable="false">ultimoG</string>
-    <string name="ultimaPText">L\'ultima volta hai prenotato da %1$s, vuoi andarci?</string>
+    <string name="ultimaPText">Ultimamente hai prenotato spesso da %1$s, vuoi andarci?</string>
     <string name="ultimoGText">%1$s scorso hai mangiato da %2$s, vuoi prenotare?</string>
     <string name="prenota">Prenota %1$s</string>
 
