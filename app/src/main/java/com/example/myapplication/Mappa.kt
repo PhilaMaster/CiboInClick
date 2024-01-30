@@ -66,8 +66,6 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback, LocationListener {
         statoPermission = ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)
         if(statoPermission == PackageManager.PERMISSION_GRANTED){
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,5000,500f,this)
-
-            Toast.makeText(this, "sussone", Toast.LENGTH_SHORT).show()
         }
         else {
             permessi = false
@@ -163,21 +161,11 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback, LocationListener {
             val tipo = cursor.getString(indexTipo)
 
 
-            /* Set row width to match_parent
-            row.layoutParams = TableRow.LayoutParams(
-                TableRow.LayoutParams.MATCH_PARENT,
-                TableRow.LayoutParams.WRAP_CONTENT
-            )
-            row.setBackgroundColor(resources.getColor(android.R.color.darker_gray))
-
-            */
-            // Create cell TextViews and add them to the row
             val button = Button(this)
 
 
             button.text = "$nome , $tipo"
 
-            //val scrollsus = findViewById<ScrollView>(R.id.sus)
 
             val screenSize = ScreenUtils.getScreenSize(this)
             val screenWidth = screenSize.x
