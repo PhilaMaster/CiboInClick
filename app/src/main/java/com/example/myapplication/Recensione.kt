@@ -14,8 +14,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 
+@Suppress("DEPRECATION")
 class Recensione : AppCompatActivity() {
-    @SuppressLint("Range")
+    @SuppressLint("Range", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recensione)
@@ -66,7 +67,7 @@ class Recensione : AppCompatActivity() {
                 conteggio++
             } while (cursor.moveToNext())
         }
-
+        cursor.close()
         // Calcola le medie
         val mediaStelleCibo = if (conteggio > 0) totaleStelleCibo / conteggio else 0.0
         val mediaStellePrezzo = if (conteggio > 0) totaleStellePrezzo / conteggio else 0.0
@@ -188,10 +189,10 @@ class Recensione : AppCompatActivity() {
                 values.put("votoCibo", numStelleCibo)
 
                 // Inserisci i dati nella tabella "Recensione"
-                val result = db.insert("Recensione", null, values)
+                db.insert("Recensione", null, values)
                 Toast.makeText(
                     this@Recensione,
-                    "Recensione inviata con successo!",
+                    getString(R.string.recensioneInserita),
                     Toast.LENGTH_SHORT
                 ).show()
                 // Controlla se l'inserimento è avvenuto con successo
@@ -200,7 +201,7 @@ class Recensione : AppCompatActivity() {
                 // Mostra un messaggio di errore se non tutti i campi sono stati compilati
                 Toast.makeText(
                     this@Recensione,
-                    "Inserisci il tuo nome e valuta entrambe le stelle",
+                    getString(R.string.valutazioneErrata),
                     Toast.LENGTH_SHORT
                 ).show()
             }

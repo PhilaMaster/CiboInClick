@@ -29,6 +29,8 @@
     <string name="nomeR">Name</string>
     <string name="ciboR">Food</string>
     <string name="prezzoR">Price</string>
+    <string name="recensioneInserita">Review sent successfully!</string>
+    <string name="valutazioneErrata">Enter your name and rate both categories</string>
 
     <!-- MainActivity-->
     <string name="cambiaLingua">Change language \ud83c\uddec\ud83c\udde7</string>

@@ -30,6 +30,8 @@
     <string name="nomeR">Nome</string>
     <string name="ciboR">Cibo</string>
     <string name="prezzoR">Prezzo</string>
+    <string name="recensioneInserita">Recensione inviata con successo!</string>
+    <string name="valutazioneErrata">Inserisci il tuo nome e valuta entrambe le categorie</string>
 
     <!-- MainActivity-->
     <string name="cambiaLingua">Cambia lingua \ud83c\uddec\ud83c\udde7</string>
