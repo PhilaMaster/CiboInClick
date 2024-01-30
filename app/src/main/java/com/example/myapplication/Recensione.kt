@@ -27,7 +27,6 @@ class Recensione : AppCompatActivity() {
 
         //  Inserisco nell'etichetta del nome ristorante
         val idRistorante = intent.getStringExtra("idRistorante")
-        //val idRistorante = "1" verifica prima di unire i progetti con un id specifico
         val array = arrayOf(idRistorante)
         val queryNome = "SELECT nome FROM Ristorante WHERE _id = ?"
         val qualeRistorante = db.rawQuery(queryNome, array)
@@ -42,7 +41,7 @@ class Recensione : AppCompatActivity() {
         } else {
             // Gestisco il caso in cui non trovo ristoranti
             val etichettaRistorante = findViewById<TextView>(R.id.prezzo)
-            etichettaRistorante.text = "Ristorante non trovato :("
+            etichettaRistorante.text = "Ristorante non trovato"
         }
 
 
