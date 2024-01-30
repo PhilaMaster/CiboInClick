@@ -1,6 +1,7 @@
 package com.example.myapplication
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -34,6 +35,7 @@ import java.io.IOException
 import java.util.Locale
 
 
+@Suppress("DEPRECATION")
 class Mappa: AppCompatActivity(), OnMapReadyCallback, LocationListener {
 
 
@@ -88,15 +90,6 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback, LocationListener {
         }
     }
 
-    override fun onProviderEnabled(provider: String) {
-        super.onProviderEnabled(provider)
-
-    }
-
-    override fun onProviderDisabled(provider: String) {
-        super.onProviderDisabled(provider)
-        Toast.makeText(this,"Attenzione: Provider GPS disabilitato",Toast.LENGTH_SHORT).show()
-    }
     override fun onLocationChanged(p0: Location) {
 
         val currentLatLng = LatLng(p0.latitude, p0.longitude)
@@ -116,7 +109,7 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback, LocationListener {
             val addresses: MutableList<Address>? = geocoder.getFromLocation(location.latitude, location.longitude, 1)
             if (addresses != null) {
                 if (addresses.isNotEmpty()) {
-                    val city = addresses?.get(0)?.locality
+                    val city = addresses.get(0).locality
                     if (city != null && city.isNotEmpty()) {
                         return city
                     }
@@ -127,6 +120,7 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback, LocationListener {
         }
         return "Città sconosciuta"
     }
+    @SuppressLint("SetTextI18n")
     private fun gestioneEstrazioneDati(){
         val db: SQLiteDatabase = dbHelper.writableDatabase // apro il db
         val datoRicevuto = intent.getStringExtra("Chiave")
@@ -269,6 +263,7 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback, LocationListener {
 }
 
 
+@Suppress("DEPRECATION")
 class ScreenUtils {
     companion object {
         fun getScreenSize(context: Context): Point {

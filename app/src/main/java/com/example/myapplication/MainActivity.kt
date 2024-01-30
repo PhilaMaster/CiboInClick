@@ -6,7 +6,6 @@ import android.content.res.Configuration
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.view.View
-import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
@@ -16,6 +15,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
+@Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
     private val mioDb = MyDbHelper(this)
 
@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         this.gestioneOrario()
-        this.gestioneVisibilitàBottoneUlt()
+        this.gestioneVisibilitaBottoneUlt()
         this.gestionePrenotazioneStessoGiorno()
 
     }
@@ -93,10 +93,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun gestioneVisibilitàBottoneUlt() {
+    fun gestioneVisibilitaBottoneUlt() {
         //In questo metodo gestisco la comparsa/scomparsa del bottone e della text view
         //riguardanti il locale prenotato più spesso
-        var db: SQLiteDatabase = mioDb.writableDatabase
+        val db: SQLiteDatabase = mioDb.writableDatabase
         val button1: Button = findViewById(R.id.bottoneUltimaPren)
         val text1: TextView = findViewById(R.id.textUltimaPrent)
         val screenSize = ScreenUtils.getScreenSize(this)
@@ -135,6 +135,7 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }
+        cursor.close()
     }
 
        private fun giornoCorrente(lingua:Boolean): String {
@@ -168,7 +169,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         private fun gestionePrenotazioneStessoGiorno(){
-            var db: SQLiteDatabase = mioDb.writableDatabase
+            val db: SQLiteDatabase = mioDb.writableDatabase
             val button2: Button = findViewById(R.id.bottoneUltimoGiorno)
             val text2: TextView = findViewById(R.id.textUltimoGiorno)
             button2.visibility = View.GONE
@@ -208,10 +209,11 @@ class MainActivity : AppCompatActivity() {
                         startActivity(intent)
                     }
                 }
+            cursor.close()
 
         }
 
-    fun setLocale(activity: Activity, languageCode: String?) {
+    private fun setLocale(activity: Activity, languageCode: String) {
         val locale = Locale(languageCode)
         Locale.setDefault(locale)
         val resources = activity.resources
