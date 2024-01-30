@@ -1,12 +1,9 @@
 package com.example.myapplication
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.database.sqlite.SQLiteDatabase
-import android.graphics.Point
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
@@ -140,20 +137,34 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-       private fun giornoCorrente(): String {
+       private fun giornoCorrente(lingua:Boolean): String {
+           //false -> ricevo nome settimana in italiano, per fare la query
+           //true  -> ricevo nome settimana nella lingua dell'app, per le textView
             val calendar = Calendar.getInstance()
             val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
 
-            return when (dayOfWeek) {
-                Calendar.SUNDAY -> "domenica"
-                Calendar.MONDAY -> "lunedì"
-                Calendar.TUESDAY -> "martedì"
-                Calendar.WEDNESDAY -> "mercoledì"
-                Calendar.THURSDAY -> "giovedì"
-                Calendar.FRIDAY -> "venerdì"
-                Calendar.SATURDAY -> "sabato"
-                else -> ""
-            }
+           if (!lingua){
+               return when (dayOfWeek) {
+                   Calendar.SUNDAY -> "domenica"
+                   Calendar.MONDAY -> "lunedì"
+                   Calendar.TUESDAY -> "martedì"
+                   Calendar.WEDNESDAY -> "mercoledì"
+                   Calendar.THURSDAY -> "giovedì"
+                   Calendar.FRIDAY -> "venerdì"
+                   Calendar.SATURDAY -> "sabato"
+                   else -> ""
+               }
+           }
+           return when (dayOfWeek) {
+               Calendar.SUNDAY -> getString(R.string.domenica)
+               Calendar.MONDAY -> getString(R.string.lunedì)
+               Calendar.TUESDAY -> getString(R.string.martedì)
+               Calendar.WEDNESDAY -> getString(R.string.mercoledì)
+               Calendar.THURSDAY -> getString(R.string.giovedì)
+               Calendar.FRIDAY -> getString(R.string.venerdì)
+               Calendar.SATURDAY -> getString(R.string.sabato)
+               else -> ""
+           }
         }
 
         private fun gestionePrenotazioneStessoGiorno(){
@@ -168,7 +179,8 @@ class MainActivity : AppCompatActivity() {
 
 
 
-            val giornoAttuale = giornoCorrente()
+            val giornoAttuale = giornoCorrente(false)
+            val giornoAttualeLang = giornoCorrente(true)
             val selectionArgs = arrayOf(giornoAttuale)
                val cursor = db.rawQuery(
                 "SELECT r.nome, r._id, m.tipo " +
@@ -187,7 +199,7 @@ class MainActivity : AppCompatActivity() {
                     button2.visibility = View.VISIBLE
                     text2.visibility = View.VISIBLE
                     button2.text = getString(R.string.prenota,nome)
-                    text2.text = getString(R.string.ultimoGText,giornoAttuale,nome)
+                    text2.text = getString(R.string.ultimoGText,giornoAttualeLang,nome)
 
                     button2.setOnClickListener {
                         val intent = Intent(this, Ristorante::class.java)

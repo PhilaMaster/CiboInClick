@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import android.graphics.Bitmap
@@ -8,11 +9,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.ImageView
-import android.widget.ScrollView
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
@@ -24,13 +22,13 @@ import java.time.LocalDate
 class Ristorante : AppCompatActivity() {
     private var numPrenotazioni = 0
     private var nomeRistorante:String? = null
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ristorante)
 
         //ricevo i valori dalle activity precedenti tramite intents
-        val idRistorante = intent.getStringExtra("ChiaveId")//la ricevo da andrea
-        val tipoRistorante = intent.getStringExtra("ChiaveTipo")//ricevo da andrea
+        val idRistorante = intent.getStringExtra("ChiaveId")
         var telefonoRistorante: String? = null
 
         //inizializzo database e prendo i valori del ristorante
@@ -57,9 +55,7 @@ class Ristorante : AppCompatActivity() {
         //inizializzo stringhe
         inizializzaTesto(nomeRistorante,telefonoRistorante)
 
-        //inizializzo dimensione tabella
-        //inizializzaDimTabella()
-
+        //inizializzo tableLayout: conterrà i vari prodotti del menù
         val tableLayout= findViewById<TableLayout>(R.id.tableLayout)
 
         //query per riempire il menù del ristorante
@@ -92,7 +88,6 @@ class Ristorante : AppCompatActivity() {
 
                 //testo2: prezzo
                 tView = TextView(this)
-
                 tView.text = getString(R.string.prezzo, prezzo)
                 tView.textSize = 20f
                 tView.textAlignment = View.TEXT_ALIGNMENT_CENTER
@@ -109,9 +104,9 @@ class Ristorante : AppCompatActivity() {
 
                 val originalBitmap = (originalDrawable as BitmapDrawable).bitmap
 
+                //ridimensiono l'immagine
                 val newWidthInDp = 12
                 val newHeightInDp = 12
-
                 val density = resources.displayMetrics.density
                 val newWidth = (newWidthInDp * density).toInt()
                 val newHeight = (newHeightInDp * density).toInt()
@@ -135,6 +130,7 @@ class Ristorante : AppCompatActivity() {
         buttonTelefono.setOnClickListener{
             val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$telefonoRistorante"))
             startActivity(intent)
+            //ipotizziamo che la chiamata sia andata a buon fine e sia stata effettuata la prenotazione
             Toast.makeText(this,"Prenotazione effettuata con successo, aggiornamento database in corso...",Toast.LENGTH_LONG).show()
             aggiungiPrenotazione(idRistorante,getGiornoString(LocalDate.now().dayOfWeek),db)
         }
@@ -148,22 +144,10 @@ class Ristorante : AppCompatActivity() {
         }
     }
 
-    private fun inizializzaDimTabella() {
-        val prod = findViewById<TextView>(R.id.prodotto)
-        val prezzo = findViewById<TextView>(R.id.prezzo)
-        val tipo = findViewById<TextView>(R.id.tipo)
-
-        val scroll = findViewById<ScrollView>(R.id.scrollView)
-
-        prod.width = (4/10) * (scroll.width / 3)
-        prezzo.width = (4/10) * (scroll.width / 3)
-        tipo.width = (2/10) * (scroll.width / 3)
-    }
-
-    internal fun aggiungiPrenotazione(idRistorante: String?, giornoString: String, db:SQLiteDatabase) {
+    private fun aggiungiPrenotazione(idRistorante: String?, giornoString: String, db:SQLiteDatabase) {
         numPrenotazioni++
 
-        //rimuovo vecchio ultimoGiorno se esiste
+        //rimuovo vecchio ultimoGiorno se esiste (mantengo solo l'ultimo ristorante da cui ho ordinato, per ogni giorno della settimana)
         val cursor = db.query("Ristorante", arrayOf("_id"),"ultimoGiorno = ?",
             arrayOf(giornoString),null,null,null)
 
@@ -183,11 +167,8 @@ class Ristorante : AppCompatActivity() {
     private fun inizializzaTesto(nomeRistorante:String?,telefonoRistorante:String?){
         if ( (nomeRistorante==null) || (telefonoRistorante==null)){//controllo sulle query
             Log.e("stringheNull","Errore stringhe null nomeRistorante o TelefonoRistorante. Query non funzionante")
+            return
         }
-
-
-
-        //mytextview.setText(Html.fromHtml(sourceString));
         val tvNomeRistorante = findViewById<TextView>(R.id.nomeRistorante)
         tvNomeRistorante.text = getString(R.string.benvenuto,nomeRistorante,numPrenotazioni)
         val buttonTelefono = findViewById<Button>(R.id.buttonTelefono)
@@ -196,14 +177,14 @@ class Ristorante : AppCompatActivity() {
 
     //per avere il giorno della settimana attuale -> LocalDate.now().dayOfWeek
     private fun getGiornoString(giorno:DayOfWeek): String {
-        when(giorno){
-            DayOfWeek.MONDAY -> return getString(R.string.lunedì)
-            DayOfWeek.TUESDAY -> return getString(R.string.martedì)
-            DayOfWeek.WEDNESDAY -> return getString(R.string.mercoledì)
-            DayOfWeek.THURSDAY -> return getString(R.string.giovedì)
-            DayOfWeek.FRIDAY -> return getString(R.string.venerdì)
-            DayOfWeek.SATURDAY -> return getString(R.string.sabato)
-            DayOfWeek.SUNDAY -> return getString(R.string.domenica)
+        return when(giorno){
+            DayOfWeek.MONDAY -> getString(R.string.lunedì)
+            DayOfWeek.TUESDAY -> getString(R.string.martedì)
+            DayOfWeek.WEDNESDAY -> getString(R.string.mercoledì)
+            DayOfWeek.THURSDAY -> getString(R.string.giovedì)
+            DayOfWeek.FRIDAY -> getString(R.string.venerdì)
+            DayOfWeek.SATURDAY -> getString(R.string.sabato)
+            DayOfWeek.SUNDAY -> getString(R.string.domenica)
         }
     }
 }

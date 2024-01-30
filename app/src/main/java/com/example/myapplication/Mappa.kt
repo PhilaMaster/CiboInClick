@@ -23,6 +23,7 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.Point
 import android.os.Build
+import android.util.Log
 import android.view.WindowManager
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -45,7 +46,7 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback, LocationListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mappa)
-        var mapFragment: SupportMapFragment? =
+        val mapFragment: SupportMapFragment? =
             supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
         this.gestioneEstrazioneDati()
@@ -60,14 +61,15 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback, LocationListener {
 
         }
         else {
-            Toast.makeText(this,"Hai già i permessi o hai rifiutato",Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this,"Hai già i permessi o hai rifiutato",Toast.LENGTH_SHORT).show()
+            Log.d("gps permessi","Hai già i permessi o hai rifiutato")
         }
 
         statoPermission = ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)
-        if(statoPermission == PackageManager.PERMISSION_GRANTED){
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,5000,500f,this)
+        if(statoPermission == PackageManager.PERMISSION_GRANTED && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,1000,5000f,this)
 
-            Toast.makeText(this, "sussone", Toast.LENGTH_SHORT).show()
+            Log.d("gps permessi","permessi ok, calcolo posizione")
         }
         else {
             permessi = false
@@ -91,12 +93,16 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback, LocationListener {
 
     }
 
+    override fun onProviderDisabled(provider: String) {
+        super.onProviderDisabled(provider)
+        Toast.makeText(this,"Attenzione: Provider GPS disabilitato",Toast.LENGTH_SHORT).show()
+    }
     override fun onLocationChanged(p0: Location) {
 
         val currentLatLng = LatLng(p0.latitude, p0.longitude)
         myMap.addMarker(MarkerOptions().position(currentLatLng).title("La mia posizione"))
         myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f))
-        Toast.makeText(this,"Aggiornamento ${p0.longitude},${p0.latitude}",Toast.LENGTH_SHORT).show()
+        Toast.makeText(this,"Aggiornamento posizione:${p0.longitude},${p0.latitude}",Toast.LENGTH_SHORT).show()
         val cityName = getCityName(p0)
         val message = getString(R.string.seiA, cityName)
         val cityTextView: TextView = findViewById(R.id.textbox1)
@@ -121,8 +127,8 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback, LocationListener {
         }
         return "Città sconosciuta"
     }
-    fun gestioneEstrazioneDati(){
-        var db: SQLiteDatabase = dbHelper.writableDatabase // apro il db
+    private fun gestioneEstrazioneDati(){
+        val db: SQLiteDatabase = dbHelper.writableDatabase // apro il db
         val datoRicevuto = intent.getStringExtra("Chiave")
 
         val selection: String?
@@ -190,7 +196,6 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback, LocationListener {
             button.setOnClickListener {
                 val intent = Intent(this, Ristorante::class.java)
                 intent.putExtra("ChiaveId", id)
-                intent.putExtra("ChiaveTipo", tipo)
                 startActivity(intent)
             }
             val row = TableRow(this)
@@ -203,7 +208,7 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback, LocationListener {
     }
     override fun onMapReady(p0: GoogleMap) {
         myMap = p0
-        var db: SQLiteDatabase = dbHelper.writableDatabase // apro il db
+        val db: SQLiteDatabase = dbHelper.writableDatabase // apro il db
 
         val datoRicevuto = intent.getStringExtra("Chiave")  // qui dentro ho pizza, panino, sushi o tutto*
 
