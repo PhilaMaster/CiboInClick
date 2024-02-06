@@ -162,22 +162,15 @@ class Mappa: AppCompatActivity(), OnMapReadyCallback, LocationListener {
             val indexTipo = cursor.getColumnIndex("tipo")
             val tipo = cursor.getString(indexTipo)
 
-
-            /* Set row width to match_parent
-            row.layoutParams = TableRow.LayoutParams(
-                TableRow.LayoutParams.MATCH_PARENT,
-                TableRow.LayoutParams.WRAP_CONTENT
-            )
-            row.setBackgroundColor(resources.getColor(android.R.color.darker_gray))
-
-            */
-            // Create cell TextViews and add them to the row
             val button = Button(this)
+            val tipoT= when(tipo){
+                "panino" -> getString(R.string.tipoTPanino)
+                "sushi" -> getString(R.string.tipoTSushi)
+                "pizza" -> getString(R.string.tipoTPizza)
+                else -> getString(R.string.tipoTTutto)
+            }
+            button.text = "$nome , $tipoT"
 
-
-            button.text = "$nome , $tipo"
-
-            //val scrollsus = findViewById<ScrollView>(R.id.sus)
 
             val screenSize = ScreenUtils.getScreenSize(this)
             val screenWidth = screenSize.x

@@ -44,7 +44,9 @@
 
     <!-- Mappa -->
     <string name="seiA">You are in %1$s</string>
-
+    <string name="tipoTPanino">sandwich</string>
+    <string name="tipoTPizza">pizza</string>
+    <string name="tipoTSushi">sushi</string>
 
 
 

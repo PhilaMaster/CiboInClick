@@ -49,6 +49,10 @@
 
     <!-- Mappa -->
     <string name="seiA">Sei a %1$s</string>
+    <string name="tipoTPanino">panino</string>
+    <string name="tipoTPizza">pizza</string>
+    <string name="tipoTSushi">sushi</string>
+    <string name="tipoTTutto" translatable="false">*</string>
 
 
 
